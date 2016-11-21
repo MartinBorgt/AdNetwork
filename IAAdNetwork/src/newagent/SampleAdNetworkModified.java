@@ -39,6 +39,7 @@ public class SampleAdNetworkModified extends Agent {
      * Basic simulation information. An agent should receive the {@link
      * StartInfo} at the beginning of the game or during recovery.
      */
+    @SuppressWarnings("unused")
     private StartInfo startInfo;
     /**
      * Messages received:
@@ -103,9 +104,48 @@ public class SampleAdNetworkModified extends Agent {
      * Log records
      */
     private List<CampaignLogReport> logReports = new ArrayList<CampaignLogReport>();
+    
+    /*
+     * Winning Campaign(s)
+     */
+    private List<CampaignLogReport> winCampaigns = new ArrayList<CampaignLogReport>();
+
+    /*
+     * Losing Campaign(s)
+     */
+    private List<CampaignLogReport> lostCampaigns = new ArrayList<CampaignLogReport>();
+
+    /*
+     * Conflicting Campaign(s)
+     */
+    private List<CampaignLogReport> conflictingCampaigns = new ArrayList<CampaignLogReport>();
 
     public SampleAdNetworkModified() {
         campaignReports = new LinkedList<CampaignReport>();
+    }
+
+    public List<CampaignLogReport> getConflictingCampaigns() {
+        return conflictingCampaigns;
+    }
+
+    public void setConflictingCampaigns(List<CampaignLogReport> conflictingCampaigns) {
+        this.conflictingCampaigns = conflictingCampaigns;
+    }
+
+    public List<CampaignLogReport> getLostCampaigns() {
+        return lostCampaigns;
+    }
+
+    public void setLostCampaigns(List<CampaignLogReport> lostCampaigns) {
+        this.lostCampaigns = lostCampaigns;
+    }
+
+    public List<CampaignLogReport> getWinCampaigns() {
+        return winCampaigns;
+    }
+
+    public void setWinCampaigns(List<CampaignLogReport> winCampaigns) {
+        this.winCampaigns = winCampaigns;
     }
 
     public List<CampaignLogReport> getLogReports() {
@@ -118,8 +158,8 @@ public class SampleAdNetworkModified extends Agent {
 
     public Queue<CampaignReport> getCampaignReports() {
         return campaignReports;
-    }    
-    
+    }
+
     public AdNetworkDailyNotification getAdNetworkDailyNotification() {
         return adNetworkDailyNotification;
     }
@@ -246,7 +286,7 @@ public class SampleAdNetworkModified extends Agent {
 
     public void setUcsTargetLevel(double ucsTargetLevel) {
         this.ucsTargetLevel = ucsTargetLevel;
-    }        
+    }
 
     @Override
     protected void messageReceived(Message message) {
@@ -314,12 +354,12 @@ public class SampleAdNetworkModified extends Agent {
 
     private void handleBankStatus(BankStatus content) {
         System.out.println("Day " + day + " :" + content.toString());
-        
+
         /*
          * Record Log
          */
-        for (int i = 0; i < logReports.size(); i++) {            
-            if(logReports.get(i).getDay()==day){
+        for (int i = 0; i < logReports.size(); i++) {
+            if (logReports.get(i).getDay() == day) {
                 logReports.get(i).setBankStatus(content.getAccountBalance());
             }
         }
@@ -363,7 +403,7 @@ public class SampleAdNetworkModified extends Agent {
     private void handleICampaignOpportunityMessage(CampaignOpportunityMessage com) {
         new HandleCampaignOpportunityMessage().run(this, com);
     }
-    
+
     public void sendResponse(String demandAgentAddress, Transportable bids) {
         sendMessage(demandAgentAddress, bids);
     }
@@ -393,7 +433,6 @@ public class SampleAdNetworkModified extends Agent {
     protected void sendBidAndAds(SampleAdNetworkModified adNetwork) {
         new SendTheBidsAndAds().Run(adNetwork);
     }
-    
 
     /**
      * Campaigns performance w.r.t. each allocated campaign
@@ -460,10 +499,10 @@ public class SampleAdNetworkModified extends Agent {
         new GeneratingAdxQuerySpace().run(adNetwork);
     }
 
-    public void generatingAdxQuerySpace(SampleAdNetworkModified adNetwork){
+    public void generatingAdxQuerySpace(SampleAdNetworkModified adNetwork) {
         generateAdxQuerySpace(adNetwork);
     }
-    
+
     /*
      * genarates an array of the publishers names
      *
@@ -479,12 +518,11 @@ public class SampleAdNetworkModified extends Agent {
             names.toArray(adNetwork.getPublisherNames());
         }
     }
-    
+
     /*
      * genarates the campaign queries relevant for the specific campaign, and
      * assign them as the campaigns campaignQueries field
      */
-
     public void genCampaignQueries(CampaignData campaignData) {
         Set<AdxQuery> campaignQueriesSet = new HashSet<AdxQuery>();
         for (String PublisherName : publisherNames) {
@@ -501,5 +539,5 @@ public class SampleAdNetworkModified extends Agent {
         campaignData.campaignQueries = new AdxQuery[campaignQueriesSet.size()];
         campaignQueriesSet.toArray(campaignData.campaignQueries);
         System.out.println("!!!!!!!!!!!!!!!!!!!!!!" + Arrays.toString(campaignData.campaignQueries) + "!!!!!!!!!!!!!!!!");
-    }    
+    }
 }
