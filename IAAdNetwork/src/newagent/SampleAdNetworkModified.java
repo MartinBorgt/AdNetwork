@@ -4,18 +4,10 @@
  */
 package newagent;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.Queue;
-import java.util.Set;
+import edu.umich.eecs.tac.props.BankStatus;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import edu.umich.eecs.tac.props.BankStatus;
 import se.sics.isl.transport.Transportable;
 import se.sics.tasim.aw.Agent;
 import se.sics.tasim.aw.Message;
@@ -106,9 +98,22 @@ public class SampleAdNetworkModified extends Agent {
     private int iteration;
     private String[] publisherNames;
     private CampaignData currCampaign;
+    
+    /*
+     * Log records
+     */
+    private List<CampaignLogReport> logReports = new ArrayList<CampaignLogReport>();
 
     public SampleAdNetworkModified() {
         campaignReports = new LinkedList<CampaignReport>();
+    }
+
+    public List<CampaignLogReport> getLogReports() {
+        return logReports;
+    }
+
+    public void setLogReports(List<CampaignLogReport> logReports) {
+        this.logReports = logReports;
     }
 
     public Queue<CampaignReport> getCampaignReports() {
@@ -309,6 +314,15 @@ public class SampleAdNetworkModified extends Agent {
 
     private void handleBankStatus(BankStatus content) {
         System.out.println("Day " + day + " :" + content.toString());
+        
+        /*
+         * Record Log
+         */
+        for (int i = 0; i < logReports.size(); i++) {            
+            if(logReports.get(i).getDay()==day){
+                logReports.get(i).setBankStatus(content.getAccountBalance());
+            }
+        }
     }
 
     /**

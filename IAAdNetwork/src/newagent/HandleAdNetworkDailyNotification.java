@@ -4,6 +4,7 @@
  */
 package newagent;
 
+import java.util.StringTokenizer;
 import tau.tac.adx.report.demand.AdNetworkDailyNotification;
 
 /**
@@ -16,7 +17,7 @@ public class HandleAdNetworkDailyNotification {
     }
 
     public void run(SampleAdNetworkModified adNetwork, AdNetworkDailyNotification notificationMessage) {
-        
+
         adNetwork.setAdNetworkDailyNotification(notificationMessage);
 
         System.out.println("Day " + adNetwork.getDay() + ": Daily notification for campaign "
@@ -44,5 +45,22 @@ public class HandleAdNetworkDailyNotification {
                 + ". UCS Level set to " + notificationMessage.getServiceLevel()
                 + " at price " + notificationMessage.getPrice()
                 + " Quality Score is: " + notificationMessage.getQualityScore());
+
+        /*
+         * Record Log
+         */
+        for (int i = 0; i < adNetwork.getLogReports().size(); i++) {
+            if (adNetwork.getLogReports().get(i).getCampaignId() == adNetwork.getAdNetworkDailyNotification().getCampaignId()) {
+                adNetwork.getLogReports().get(i).setWinner(campaignAllocatedTo);
+                if(campaignAllocatedTo.contains(" WON at cost (Millis)")){
+                    StringTokenizer st = new StringTokenizer(campaignAllocatedTo, ")");
+                    st.nextToken();
+                    adNetwork.getLogReports().get(i).setSecondPrice(Long.parseLong(st.nextToken()));
+                }
+                adNetwork.getLogReports().get(i).setServiceLevel(notificationMessage.getServiceLevel());
+                adNetwork.getLogReports().get(i).setQualityScore(notificationMessage.getQualityScore());
+                adNetwork.getLogReports().get(i).setPrice(notificationMessage.getPrice());
+            }
+        }
     }
 }

@@ -35,6 +35,17 @@ public class HandleCampaignReport {
                     + cstats.getTargetedImps() + " tgtImps "
                     + cstats.getOtherImps() + " nonTgtImps. Cost of imps is "
                     + cstats.getCost());
+
+            /*
+             * Record Log
+             */
+            for (int i = 0; i < adNetwork.getLogReports().size(); i++) {
+                if(adNetwork.getLogReports().get(i).getCampaignId() == cmpId){
+                    adNetwork.getLogReports().get(i).setTargetedImps(cstats.getTargetedImps());
+                    adNetwork.getLogReports().get(i).setOtherImps(cstats.getOtherImps());
+                    adNetwork.getLogReports().get(i).setCost(cstats.getCost());
+                }
+            }
         }
 
     }

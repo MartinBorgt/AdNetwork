@@ -6,7 +6,6 @@ package newagent;
 
 import java.util.HashSet;
 import java.util.Set;
-
 import tau.tac.adx.ads.properties.AdType;
 import tau.tac.adx.devices.Device;
 import tau.tac.adx.props.AdxQuery;

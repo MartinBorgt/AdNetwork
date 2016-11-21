@@ -5,7 +5,6 @@
 package newagent;
 
 import java.util.Random;
-
 import tau.tac.adx.report.demand.AdNetBidMessage;
 import tau.tac.adx.report.demand.CampaignOpportunityMessage;
 
@@ -52,6 +51,25 @@ public class HandleCampaignOpportunityMessage {
             System.out.println("Day " + adNetwork.getDay() + ": Initial ucs bid is " + adNetwork.getUcsBid());
         }
 
+        /*
+         * Record Log
+         */
+        CampaignLogReport logReport = new CampaignLogReport();
+        logReport.setCampaignId(adNetwork.getPendingCampaign().id);
+        logReport.setDay(adNetwork.getDay());
+        logReport.setReachImps(adNetwork.getPendingCampaign().reachImps);
+        logReport.setDayStart((int) adNetwork.getPendingCampaign().dayStart);
+        logReport.setDayEnd((int) adNetwork.getPendingCampaign().dayEnd);
+        logReport.setTargetSegment(adNetwork.getPendingCampaign().targetSegment);
+        logReport.setVideoCoef(adNetwork.getPendingCampaign().videoCoef);
+        logReport.setMobileCoef(adNetwork.getPendingCampaign().mobileCoef);
+        logReport.setCampaignQueries(adNetwork.getPendingCampaign().campaignQueries);
+        logReport.setStats(adNetwork.getPendingCampaign().stats);
+        logReport.setBudget(adNetwork.getPendingCampaign().budget);
+        logReport.setUcsLevel(adNetwork.getUcsBid());
+        logReport.setBudgetMilis(cmpBidMillis);
+        adNetwork.getLogReports().add(logReport);
+        
         /*
          * Note: Campaign bid is in millis
          */
