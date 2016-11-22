@@ -1,4 +1,4 @@
-
+package newagent;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -38,6 +38,23 @@ import tau.tac.adx.report.publisher.AdxPublisherReport;
 import tau.tac.adx.report.publisher.AdxPublisherReportEntry;
 import edu.umich.eecs.tac.props.Ad;
 import edu.umich.eecs.tac.props.BankStatus;
+
+/*
+ * weka library
+ */
+import weka.core.Instances;
+import weka.classifiers.bayes.NaiveBayes;
+import weka.classifiers.functions.SMO;
+import weka.core.converters.ConverterUtils.DataSource;
+import weka.filters.Filter;
+import weka.filters.supervised.attribute.AttributeSelection;
+import weka.attributeSelection.CfsSubsetEval;
+import weka.attributeSelection.GreedyStepwise;
+import weka.core.Instance;
+
+import java.io.IOException;
+import java.io.File;
+import java.io.FileNotFoundException;
 
 /**
  * 
@@ -162,7 +179,88 @@ public class SimpleAdNetwork extends Agent {
 			return;
 		}
 	}
-
+	
+	/*
+	 * select required attribute (AttributeSelection)
+	 * get the predicted value
+	 * put them in classifier
+	 * get the return value
+	 * update list
+	 */
+	public void wekaClassifier(){
+		try{
+			 // load data
+			DataSource source = new DataSource("/arff/data.arff");
+			Instances dataset = source.getDataSet();
+			
+			//creating filter object
+			AttributeSelection filter = new AttributeSelection();
+			
+			// setting the class index
+			if(dataset.classIndex() == -1){
+				dataset.setClassIndex(dataset.numAttributes() - 1);
+			}
+			
+			// creating classifier object
+			NaiveBayes nb = new NaiveBayes();
+			nb.buildClassifier(dataset);
+			
+			System.out.println(nb.getCapabilities().toString());
+			
+			// creating svm classifier
+			SMO svm = new SMO();
+			svm.buildClassifier(dataset);
+			
+			System.out.println(svm.getCapabilities().toString());		
+			
+			// testing dataset
+			DataSource dataSet2 = new DataSource("");
+			Instances testDataset = dataSet2.getDataSet();
+			
+			testDataset.setClassIndex(testDataset.numAttributes() -1);
+			
+			for(int i = 0; i < testDataset.numInstances(); i++){
+				double actualClass = testDataset.instance(i).classValue();
+				
+				String actual = testDataset.classAttribute().value((int) actualClass);
+				
+				Instance newInt = testDataset.instance(i);
+				
+				double predNB = nb.classifyInstance(newInt);
+				
+				String predStr = testDataset.classAttribute().value((int) predNB);
+				System.out.println(actual + ", " + predStr);
+			}
+			
+			/*
+			// creating evaluator and search algorithm objects
+			CfsSubsetEval eval = new CfsSubsetEval();
+			GreedyStepwise search = new GreedyStepwise();
+			
+			search.setSearchBackwards(true);
+			
+			filter.setEvaluator(eval);
+			filter.setSearch(search);
+			filter.setInputFormat(dataset);
+			
+			Instances newDataset = Filter.useFilter(dataset, filter);
+			
+			 //saving data
+			 ArffSaver saver = new ArffSaver();
+			 saver.setInstances(newDataset);
+			 saver.setFile(new File("./data/test.arff"));
+			 saver.setDestination(new File("./data/test.arff"));   // **not** necessary in 3.5.4 and later
+			 saver.writeBatch();
+			 */
+			
+			 
+			 
+		}catch (Exception e){
+			
+		}
+	}
+	
+	
 	private void hadnleCampaignAuctionReport(CampaignAuctionReport content) {
 		// ingoring - this message is obsolete
 	}
