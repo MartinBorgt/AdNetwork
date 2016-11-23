@@ -5,6 +5,7 @@
 package newagent;
 
 import java.util.Random;
+
 import tau.tac.adx.report.demand.AdNetBidMessage;
 import tau.tac.adx.report.demand.CampaignOpportunityMessage;
 
@@ -77,7 +78,13 @@ public class HandleCampaignOpportunityMessage {
         logReport.setUcsLevel(adNetwork.getUcsBid());
         logReport.setBudgetMilis(cmpBidMillis);
         adNetwork.getLogReports().add(logReport);
-        
+        /*
+         * Example of how to use UserPopulationProbabilities
+         * System.out.println("probability being computed");
+         * UserPopulationProbabilities userPopulationProbabilities = new UserPopulationProbabilities();
+         * int chance = userPopulationProbabilities.getProbability(adNetwork.getPendingCampaign().targetSegment);
+         * System.out.println("total probability is " + chance);
+         */
         /*
          * Note: Campaign bid is in millis
          */

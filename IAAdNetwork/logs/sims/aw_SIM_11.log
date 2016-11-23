@@ -1,0 +1,13 @@
+23/11 17:40:00 SEVERE agentware.AgentServiceImpl|agent could not handle message Message[coordinator,adv1,tau.tac.adx.report.demand.CampaignOpportunityMessage[266455045,2353,2,6,[YOUNG, MALE],2.37353819904819,2.4842498045113546,0,[]]]
+java.lang.UnsupportedOperationException
+	at java.util.AbstractList.remove(Unknown Source)
+	at java.util.AbstractList$Itr.remove(Unknown Source)
+	at java.util.AbstractCollection.remove(Unknown Source)
+	at newagent.UserPopulationProbabilities.getProbability(UserPopulationProbabilities.java:102)
+	at newagent.HandleCampaignOpportunityMessage.run(HandleCampaignOpportunityMessage.java:82)
+	at newagent.SampleAdNetworkModified.handleICampaignOpportunityMessage(SampleAdNetworkModified.java:404)
+	at newagent.SampleAdNetworkModified.messageReceived(SampleAdNetworkModified.java:305)
+	at se.sics.tasim.aw.AgentService.deliverToAgent(AgentService.java:130)
+	at tau.tac.adx.agentware.AgentServiceImpl.deliverToAgent(AgentServiceImpl.java:135)
+	at tau.tac.adx.agentware.SimClient.run(SimClient.java:437)
+	at java.lang.Thread.run(Unknown Source)
