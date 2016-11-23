@@ -45,8 +45,24 @@ public class SendTheBidsAndAds {
          * for now, a single entry per active campaign is added for queries of
          * matching target segment.
          */
-
-        if ((dayBiddingFor >= adNetwork.getCurrCampaign().dayStart)
+        
+        /* 
+         * The first five days, we try to get all impressions to bring our 
+         * quality rating up and that of the opponents down.
+         */
+        if (dayBiddingFor <= 5){
+            for (AdxQuery query : adNetwork.getCurrCampaign().campaignQueries) {
+            	adNetwork.getBidBundle().addQuery(query, rbid, new Ad(null),
+                    adNetwork.getCurrCampaign().id, 1);
+            	//TODO: find best impression limit, probably as large as possible
+            	double impressionLimit = 1000000;
+            	//TODO: find best budget limit
+            	double budgetLimit = 1000000;
+            	adNetwork.getBidBundle().setCampaignDailyLimit(adNetwork.getCurrCampaign().id,
+						(int) impressionLimit, budgetLimit);
+            }
+        }
+        else if ((dayBiddingFor >= adNetwork.getCurrCampaign().dayStart)
                 && (dayBiddingFor <= adNetwork.getCurrCampaign().dayEnd)
                 && (adNetwork.getCurrCampaign().impsTogo() > 0)) {
 
