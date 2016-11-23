@@ -34,7 +34,15 @@ public class HandleCampaignOpportunityMessage {
 
         Random random = new Random();
         long cmpimps = com.getReachImps();
+        
+        /*
+         * During the first five days we do not want to take on a campaign
+         * in order to not compete with every opponent for impressions
+         */
         long cmpBidMillis = random.nextInt((int) cmpimps);
+        if(adNetwork.getDay() <= 5){
+        	cmpBidMillis = cmpimps * 2;
+        }
 
         System.out.println("Day " + adNetwork.getDay() + ": Campaign total budget bid (millis): " + cmpBidMillis);
 
