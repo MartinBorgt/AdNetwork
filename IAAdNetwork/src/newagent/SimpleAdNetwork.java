@@ -12,6 +12,8 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import edu.umich.eecs.tac.props.Ad;
+import edu.umich.eecs.tac.props.BankStatus;
 import se.sics.isl.transport.Transportable;
 import se.sics.tasim.aw.Agent;
 import se.sics.tasim.aw.Message;
@@ -36,25 +38,15 @@ import tau.tac.adx.report.demand.InitialCampaignMessage;
 import tau.tac.adx.report.demand.campaign.auction.CampaignAuctionReport;
 import tau.tac.adx.report.publisher.AdxPublisherReport;
 import tau.tac.adx.report.publisher.AdxPublisherReportEntry;
-import edu.umich.eecs.tac.props.Ad;
-import edu.umich.eecs.tac.props.BankStatus;
-
+import weka.classifiers.bayes.NaiveBayes;
+import weka.classifiers.functions.SMO;
+import weka.core.Instance;
 /*
  * weka library
  */
 import weka.core.Instances;
-import weka.classifiers.bayes.NaiveBayes;
-import weka.classifiers.functions.SMO;
 import weka.core.converters.ConverterUtils.DataSource;
-import weka.filters.Filter;
 import weka.filters.supervised.attribute.AttributeSelection;
-import weka.attributeSelection.CfsSubsetEval;
-import weka.attributeSelection.GreedyStepwise;
-import weka.core.Instance;
-
-import java.io.IOException;
-import java.io.File;
-import java.io.FileNotFoundException;
 
 /**
  * 

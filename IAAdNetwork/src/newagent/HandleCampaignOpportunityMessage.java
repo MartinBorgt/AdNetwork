@@ -4,8 +4,10 @@
  */
 package newagent;
 
+import java.util.Iterator;
 import java.util.Random;
 
+import tau.tac.adx.report.adn.MarketSegment;
 import tau.tac.adx.report.demand.AdNetBidMessage;
 import tau.tac.adx.report.demand.CampaignOpportunityMessage;
 
@@ -33,6 +35,106 @@ public class HandleCampaignOpportunityMessage {
          * (upper bound) price for the auction.
          */
 
+        /*
+         * Check today campaign that conflict with Winning campaign(s)
+         * use isConflictWithWinningCampaign to check conflicting status
+         */
+        boolean isConflictWithWinningCampaign = false;
+        for (Iterator<CampaignLogReport> it = adNetwork.getWinCampaigns().iterator(); it.hasNext();) {
+            CampaignLogReport clr = it.next();
+            for (Iterator<MarketSegment> it1 = clr.getTargetSegment().iterator(); it1.hasNext();) {
+                MarketSegment marketSegment = it1.next();
+                for (Iterator<MarketSegment> it2 = adNetwork.getPendingCampaign().targetSegment.iterator(); it2.hasNext();) {
+                    MarketSegment marketSegment1 = it2.next();
+                    if (marketSegment == marketSegment1) {
+                        isConflictWithWinningCampaign = true;
+                        break;
+                    }
+                }
+                if (isConflictWithWinningCampaign) {
+                    break;
+                }
+            }
+            if (isConflictWithWinningCampaign) {
+                break;
+            }
+        }
+
+        /*
+         * Check today campaign that conflict with Other campaign(s)
+         * use isConflictWithOtherCampaign to check conflicting status
+         */
+        boolean isConflictWithOtherCampaign = false;
+        for (Iterator<CampaignLogReport> it = adNetwork.getLostCampaigns().iterator(); it.hasNext();) {
+            CampaignLogReport clr = it.next();
+            for (Iterator<MarketSegment> it1 = clr.getTargetSegment().iterator(); it1.hasNext();) {
+                MarketSegment marketSegment = it1.next();
+                for (Iterator<MarketSegment> it2 = adNetwork.getPendingCampaign().targetSegment.iterator(); it2.hasNext();) {
+                    MarketSegment marketSegment1 = it2.next();
+                    if (marketSegment == marketSegment1) {
+                        isConflictWithOtherCampaign = true;
+                        break;
+                    }
+                }
+                if (isConflictWithOtherCampaign) {
+                    break;
+                }
+            }
+            if (isConflictWithOtherCampaign) {
+                break;
+            }
+        }
+
+        /*
+         * Check today campaign that conflict with our winning campaign's duration day
+         * use isDaysConflictWithWinningCampaign to check conflicting status
+         */
+        boolean isDaysConflictWithWinningCampaign = false;
+        for (Iterator<CampaignLogReport> it = adNetwork.getWinCampaigns().iterator(); it.hasNext();) {
+            CampaignLogReport clr = it.next();
+            if (clr.getDayEnd() >= adNetwork.getPendingCampaign().dayStart || clr.getDayStart() <= adNetwork.getPendingCampaign().dayEnd || (clr.getDayStart() <= adNetwork.getPendingCampaign().dayStart && clr.getDayEnd() >= adNetwork.getPendingCampaign().dayEnd) || (clr.getDayStart() >= adNetwork.getPendingCampaign().dayStart && clr.getDayEnd() <= adNetwork.getPendingCampaign().dayEnd)) {
+                isDaysConflictWithWinningCampaign = true;
+                break;
+            }
+        }
+        
+        /*
+         * Check today campaign that conflict with other campaign's duration day
+         * use isDaysConflictWithOtherCampaign to check conflicting status
+         */
+        boolean isDaysConflictWithOtherCampaign = false;
+        for (Iterator<CampaignLogReport> it = adNetwork.getLostCampaigns().iterator(); it.hasNext();) {
+            CampaignLogReport clr = it.next();
+            if (clr.getDayEnd() >= adNetwork.getPendingCampaign().dayStart || clr.getDayStart() <= adNetwork.getPendingCampaign().dayEnd || (clr.getDayStart() <= adNetwork.getPendingCampaign().dayStart && clr.getDayEnd() >= adNetwork.getPendingCampaign().dayEnd) || (clr.getDayStart() >= adNetwork.getPendingCampaign().dayStart && clr.getDayEnd() <= adNetwork.getPendingCampaign().dayEnd)) {
+                isDaysConflictWithOtherCampaign = true;
+                break;
+            }
+        }
+
+        /*
+         * Conflict Debug
+         */
+        if(isConflictWithWinningCampaign){
+            System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+            System.out.println("@ WARNING This campaign conflict with our winning campaign! @");
+            System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+        }
+        if(isConflictWithOtherCampaign){
+            System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+            System.out.println("@ WARNING This campaign conflict with other campaign!      @");
+            System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+        }
+        if(isDaysConflictWithWinningCampaign){
+            System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+            System.out.println("@ WARNING duration days conflict with our winning campaign!@");
+            System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+        }
+        if(isDaysConflictWithOtherCampaign){
+            System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+            System.out.println("@ WARNING duration days conflict with other campaign!      @");
+            System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+        }
+        
         Random random = new Random();
         long cmpimps = com.getReachImps();
         
