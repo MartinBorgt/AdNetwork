@@ -62,6 +62,69 @@ public class UserPopulationProbabilities {
 	public UserPopulationProbabilities() {
 	}
 	
+	public static int getProbabilityString(List<String> targetSegment){
+		List<String[]> probabilities =  new LinkedList<String[]>(Arrays.asList(allProbabilities));
+		for(String seg : targetSegment){
+			//We remove all instances that are not what we are looking for
+			if(seg.toString().equals("FEMALE")){
+				for (Iterator<String[]> iterator = probabilities.iterator(); iterator.hasNext();) {
+				    String[] probability = iterator.next();
+				    if (!"F".equals(probability[1])) {
+				        iterator.remove();
+				    }
+				}
+			}
+			
+			if(seg.toString().equals("MALE")){
+				for (Iterator<String[]> iterator = probabilities.iterator(); iterator.hasNext();) {
+				    String[] probability = iterator.next();
+				    if (!"M".equals(probability[1])) {
+				        iterator.remove();
+				    }
+				}
+			}
+			if(seg.toString().equals("LOW_INCOME")){
+				for (Iterator<String[]> iterator = probabilities.iterator(); iterator.hasNext();) {
+				    String[] probability = iterator.next();
+				    if (!("0-30".equals(probability[2])||"30-60".equals(probability[2]))) {
+				        iterator.remove();
+				    }
+				}
+			}
+			if(seg.toString().equals("HIGH_INCOME")){
+				for (Iterator<String[]> iterator = probabilities.iterator(); iterator.hasNext();) {
+				    String[] probability = iterator.next();
+				    if (("0-30".equals(probability[2])||"30-60".equals(probability[2]))) {
+				        iterator.remove();
+				    }
+				}
+			}
+			if(seg.toString().equals("YOUNG")){
+				for (Iterator<String[]> iterator = probabilities.iterator(); iterator.hasNext();) {
+				    String[] probability = iterator.next();
+				    if (!("18-24".equals(probability[0])||"25-34".equals(probability[0])||"35-44".equals(probability[0]))) {
+				        iterator.remove();
+				    }
+				}
+			}
+			if(seg.toString().equals("OLD")){
+				for (Iterator<String[]> iterator = probabilities.iterator(); iterator.hasNext();) {
+				    String[] probability = iterator.next();
+				    if (("18-24".equals(probability[0])||"25-34".equals(probability[0])||"35-44".equals(probability[0]))) {
+				        iterator.remove();
+				    }
+				}
+			}
+		}
+		
+		//Then we add up the probabilities and return
+		int returnvalue = 0;
+		for (String[] probability : probabilities ) {
+		    returnvalue += Integer.parseInt(probability[3]);
+		}
+		return returnvalue;
+	}
+	
 	public static int getProbability(Set<MarketSegment> targetSegment){
 		List<String[]> probabilities =  new LinkedList<String[]>(Arrays.asList(allProbabilities));
 		for(MarketSegment seg : targetSegment){

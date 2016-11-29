@@ -5,13 +5,12 @@
 package newagent;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang3.Range;
-import static java.lang.Math.toIntExact;
 
 import edu.umich.eecs.tac.props.Ad;
 import tau.tac.adx.ads.properties.AdType;
@@ -110,10 +109,65 @@ public class SendTheBidsAndAds {
                 }
             }
 
+            /*
+             * Impression Strategy
+             */
+
+            CampaignLogReport currentCampaign = null;
+            for (int i = 0; i < adNetwork.getLogReports().size(); i++) {
+                if (adNetwork.getLogReports().get(i).getCampaignId() == adNetwork.getCurrCampaign().id) {
+                    currentCampaign = adNetwork.getLogReports().get(i);
+                    break;
+                }
+            }
+
+            double totalImpCost = currentCampaign.getCost();
             double impressionLimit = adNetwork.getCurrCampaign().impsTogo();
-            double budgetLimit = adNetwork.getCurrCampaign().budget;
+            double budgetLimit = adNetwork.getCurrCampaign().budget - totalImpCost;
+            double n = impressionLimit / currentCampaign.getReachImps();
+            double budgetAvailable = budgetLimit * 0.9;
+
+            /*
+             * Calculate how much the value is of bids on this day using pop(s,
+             * t) by iterating all winning campaign
+             */
+            double popSt = 0;
+            for (int i = 0; i < adNetwork.getLogReports().size(); i++) {
+                if (adNetwork.getLogReports().get(i).getDayStart() >= dayBiddingFor && adNetwork.getLogReports().get(i).getDayStart() <= dayBiddingFor) {
+                    for (Iterator<MarketSegment> it = currentCampaign.getTargetSegment().iterator(); it.hasNext();) {
+                        MarketSegment marketSegment = it.next();
+                        for (Iterator<MarketSegment> it1 = adNetwork.getLogReports().get(i).getTargetSegment().iterator(); it1.hasNext();) {
+                            MarketSegment marketSegment1 = it1.next();
+                            if (marketSegment == marketSegment1) {
+                                List<String> markets = new ArrayList<String>();
+                                markets.add(marketSegment.name());
+                                popSt += adNetwork.getLogReports().get(i).getReachImps() / (UserPopulationProbabilities.getProbabilityString(markets) * ((adNetwork.getLogReports().get(i).getDayEnd() - adNetwork.getLogReports().get(i).getDayStart()) + 1));
+                            }
+                        }
+                    }
+                }
+            }
+
+            double valueOfBid = popSt;
+            boolean reachSmall = false;
+            if (UserPopulationProbabilities.getProbability(currentCampaign.getTargetSegment()) > impressionLimit) {
+                reachSmall = true;
+            }
+
+            // what is budgetAvailable = Maximumamount * ReachLeft
+            if (valueOfBid > budgetAvailable && reachSmall) {
+                budgetAvailable = currentCampaign.getBudget() * impressionLimit;
+            }
+
+            double ni = 1 - (1 / ((currentCampaign.getDayEnd() - currentCampaign.getDayStart()) - 1));
+            if (dayBiddingFor == currentCampaign.getDayEnd() && n < ni) {
+                budgetAvailable = 2 * budgetAvailable;
+            }
+
             adNetwork.getBidBundle().setCampaignDailyLimit(adNetwork.getCurrCampaign().id,
-                    (int) impressionLimit, budgetLimit);
+                    (int) (budgetAvailable / impressionLimit), budgetAvailable);
+//            adNetwork.getBidBundle().setCampaignDailyLimit(adNetwork.getCurrCampaign().id,
+//                    (int) impressionLimit, budgetLimit);
 
             System.out.println("Day " + adNetwork.getDay() + ": Updated " + entCount
                     + " Bid Bundle entries for Campaign id " + adNetwork.getCurrCampaign().id);
