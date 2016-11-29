@@ -224,7 +224,8 @@ public class SendTheBidsAndAds {
 			adNetwork.sendResponse(adNetwork.getAdxAgentAddress(), adNetwork.getBidBundle());
 		}
 	}
-
+	
+	// need working
 	public double predictCampaignCost(SampleAdNetworkModified adNetwork) {
 		/*
 		 * bid lower when winning contract is important big higher when contract
@@ -233,13 +234,12 @@ public class SendTheBidsAndAds {
 		 * 
 		 * if we have higher Quality rating, it will make profit
 		 */
-		SendTheBidsAndAds sendBid = new SendTheBidsAndAds();
-
-		double bidValue = sendBid.predictMultidayPriceIndex(adNetwork);
+		double bidValue = 0;
 
 		return bidValue;
 	}
-
+	
+	// need working
 	public double predictImpressionCost(SampleAdNetworkModified adNetwork) {
 		/*
 		 * publisher initial reserve price 0.005 always impression cost should
@@ -257,151 +257,7 @@ public class SendTheBidsAndAds {
 		 * completed (maximise quality rating) then Double the budget; return
 		 * budget/reach;
 		 */
-		SendTheBidsAndAds sendBid = new SendTheBidsAndAds();
-
-		// double bidValue = sendBid.predictOneDayPriceIndex(adNetwork,
-		// adNetwork.getCurrCampaign().targetSegment, adNetwork.getDay());
 		double bidValue = 0.00;
 		return bidValue;
-	}
-
-	/*
-	 * parameter previous winning UCS bid and UCS level
-	 */
-	public double predictUCSCost(SampleAdNetworkModified adNetwork) {
-		double cost = 0;
-
-		/*
-		 * impression price rises when demand is more impression price falls
-		 * when supply is more r = minimum impression agent will reach tomorrow
-		 * b = previous winniing bid l= previous won UCS level
-		 * 
-		 * r = 3/4·DailyReach();
-		 * 
-		 * if l > 0.9 then return b/(1 + GUCS ); else if l < 0.81 and r0/b >=
-		 * 20/3 · (1+GUCS)/E[p] then if(if segment population is lower and many
-		 * bidders for same segment on that particular day) then // aim for 2 or
-		 * 3 UCS level times = 0.9 - l GUCS = 5 % b return (times + GUCS )b;
-		 * else return b;
-		 */
-		
-		Set<CampaignLogReport> camp = new HashSet<CampaignLogReport>();
-		camp.addAll(adNetwork.getLostCampaigns());
-		camp.addAll(adNetwork.getWinCampaigns());
-		
-		
-		return cost;
-	}
-
-	/*
-	 * cost prediction of impression segment also indicate to difficult to
-	 * complete, in this case bid higher for campaign contract higher bidding
-	 * for segment can result increase in baseline crucial that biding of
-	 * popular segment is made higher than others
-	 * 
-	 * * One-day predicting request - estimating PI for next day (used for bid
-	 * bundle) Multi-day predicting request - estimating average PI for
-	 * collection of segment for following days(used for determining contract
-	 * bid)
-	 * 
-	 * 
-	 * check for user population probability check for other bidder bidding on
-	 * the same targed segment on the same day or series of day(take average)
-	 * 
-	 * if user population probability is lower then bid little high if there are
-	 * multiplebidders then bid higher
-	 * 
-	 * return segment bid value
-	 */
-	public double predictOneDayPriceIndex(SampleAdNetworkModified adNetwork, MarketSegment segment, int currentDay) {
-
-		List<CampaignLogReport> totalCampaigns = new ArrayList<CampaignLogReport>();
-		List<CampaignLogReport> matchedCampaigns = new ArrayList<CampaignLogReport>();
-		
-		totalCampaigns.addAll(adNetwork.getLostCampaigns());
-		totalCampaigns.addAll(adNetwork.getWinCampaigns());
-
-		for (CampaignLogReport camp : totalCampaigns) {
-			Range<Integer> campPeriod = Range.between(camp.getDayStart(), camp.getDayEnd() + 1);
-
-			if (camp.getTargetSegment().contains(segment) && campPeriod.contains(currentDay)) {
-				matchedCampaigns.add(camp);
-			}
-		}
-
-		// System.out.println("testing 1");
-
-		double popularity = 0.00;
-		UserPopulationProbabilities usr = new UserPopulationProbabilities();
-
-		for (CampaignLogReport r : matchedCampaigns) {
-			double reach = r.getTargetedImps();
-			int segmentPopulation = usr.getProbability(r.getTargetSegment());
-			int campaignPeriod = ((r.getDayEnd() + 1) - r.getDayStart());
-
-			double value = (reach / (segmentPopulation * campaignPeriod));
-			popularity += value;
-		}
-
-		return popularity;
-	}
-
-	/*
-	 * One-day predicting request - estimating PI for next day (used for bid
-	 * bundle) Multi-day predicting request - estimating average PI for
-	 * collection of segment for following days(used for determining contract
-	 * bid)
-	 * 
-	 * 
-	 * check for user population probability check for other bidder bidding on
-	 * the same targed segment on the same day or series of day(take average)
-	 * 
-	 * if user population probability is lower then bid little high if there are
-	 * multiplebidders then bid higher
-	 * 
-	 * return segment bid value
-	 * 
-	 */
-	public double predictMultidayPriceIndex(SampleAdNetworkModified adNetwork) {
-		
-		CampaignData currCamp = adNetwork.getCurrCampaign();
-		
-		Set<MarketSegment> segment = currCamp.targetSegment;
-		
-		int campPeriod = (int) ((currCamp.dayEnd + 1) - currCamp.dayStart);
-
-		double popularity = 0.00;
-		double storeValue = 0.00;
-
-		UserPopulationProbabilities usr = new UserPopulationProbabilities();
-		SendTheBidsAndAds sendBid = new SendTheBidsAndAds();
-
-		for (MarketSegment s : segment) {
-			Set<MarketSegment> singleSeg = new HashSet<MarketSegment>();
-
-			for (int i = (int) currCamp.dayStart; i <= currCamp.dayEnd; i++) {
-				double population = usr.getProbability(singleSeg);
-				double segmentPopularity = sendBid.predictOneDayPriceIndex(adNetwork, s, i);
-				storeValue += (population * segmentPopularity);
-			}
-		}
-
-		popularity = (storeValue / (campPeriod * usr.getProbability(segment)));
-
-		return popularity;
-	}
-
-	/*
-	 * value that shows how despereate agent wants to win the contract higher
-	 * value indicate low bidding price for contract and vice-versa
-	 */
-	public double predictCompetingIndex(SampleAdNetworkModified adNetwork) {
-		double value = 0.00;
-		/*
-		 * losing contract results higher CI value CI value gets lower when won
-		 * auction is standard second class auction and not random
-		 */
-
-		return value;
 	}
 }
