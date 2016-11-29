@@ -126,10 +126,7 @@ public class SendTheBidsAndAds {
 				// TODO: find best impression limit, probably as large as
 				// possible
 				double impressionLimit = 1000000;
-				double test = this.predictImpressionCost(adNetwork);
-				System.out.println("checking 1 " + test);
-				double test2 = this.predictMultidayPriceIndex(adNetwork);
-				System.out.println("checking 2 " + test2);
+				
 				// TODO: find best budget limit
 				double budgetLimit = 1000000;
 				adNetwork.getBidBundle().setCampaignDailyLimit(adNetwork.getCurrCampaign().id, (int) impressionLimit,
@@ -286,21 +283,13 @@ public class SendTheBidsAndAds {
 		 * bidders for same segment on that particular day) then // aim for 2 or
 		 * 3 UCS level times = 0.9 - l GUCS = 5 % b return (times + GUCS )b;
 		 * else return b;
-		 *
-		 * 
-		 * // predicting impression to get tomorrow int r = (3/4) *
-		 * adNetwork.getCurrCampaign().impsTogo();
-		 * 
-		 * 
-		 * if(adNetwork.ucsTargetLevel == 0){
-		 * 
-		 * } else { if (adNetwork.ucsTargetLevel > 0.9){
-		 * 
-		 * } else {
-		 * 
-		 * } }
 		 */
-
+		
+		Set<CampaignLogReport> camp = new HashSet<CampaignLogReport>();
+		camp.addAll(adNetwork.getLostCampaigns());
+		camp.addAll(adNetwork.getWinCampaigns());
+		
+		
 		return cost;
 	}
 
@@ -346,7 +335,7 @@ public class SendTheBidsAndAds {
 		UserPopulationProbabilities usr = new UserPopulationProbabilities();
 
 		for (CampaignLogReport r : matchedCampaigns) {
-			double reach = r.getReachImps();
+			double reach = r.getTargetedImps();
 			int segmentPopulation = usr.getProbability(r.getTargetSegment());
 			int campaignPeriod = ((r.getDayEnd() + 1) - r.getDayStart());
 
@@ -374,9 +363,11 @@ public class SendTheBidsAndAds {
 	 * 
 	 */
 	public double predictMultidayPriceIndex(SampleAdNetworkModified adNetwork) {
-
+		
 		CampaignData currCamp = adNetwork.getCurrCampaign();
+		
 		Set<MarketSegment> segment = currCamp.targetSegment;
+		
 		int campPeriod = (int) ((currCamp.dayEnd + 1) - currCamp.dayStart);
 
 		double popularity = 0.00;
