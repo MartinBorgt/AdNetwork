@@ -326,13 +326,17 @@ public class SendTheBidsAndAds {
 	 */
 	public double predictOneDayPriceIndex(SampleAdNetworkModified adNetwork, MarketSegment segment, int currentDay) {
 
-		List<CampaignLogReport> lostCampaigns = new ArrayList<CampaignLogReport>();
+		List<CampaignLogReport> totalCampaigns = new ArrayList<CampaignLogReport>();
+		List<CampaignLogReport> matchedCampaigns = new ArrayList<CampaignLogReport>();
+		
+		totalCampaigns.addAll(adNetwork.getLostCampaigns());
+		totalCampaigns.addAll(adNetwork.getWinCampaigns());
 
-		for (CampaignLogReport camp : adNetwork.getLostCampaigns()) {
+		for (CampaignLogReport camp : totalCampaigns) {
 			Range<Integer> campPeriod = Range.between(camp.getDayStart(), camp.getDayEnd() + 1);
 
 			if (camp.getTargetSegment().contains(segment) && campPeriod.contains(currentDay)) {
-				lostCampaigns.add(camp);
+				matchedCampaigns.add(camp);
 			}
 		}
 
@@ -341,7 +345,7 @@ public class SendTheBidsAndAds {
 		double popularity = 0.00;
 		UserPopulationProbabilities usr = new UserPopulationProbabilities();
 
-		for (CampaignLogReport r : lostCampaigns) {
+		for (CampaignLogReport r : matchedCampaigns) {
 			double reach = r.getReachImps();
 			int segmentPopulation = usr.getProbability(r.getTargetSegment());
 			int campaignPeriod = ((r.getDayEnd() + 1) - r.getDayStart());
