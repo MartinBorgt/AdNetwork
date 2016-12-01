@@ -92,7 +92,7 @@ public class HandleCampaignOpportunityMessage {
         boolean isDaysConflictWithWinningCampaign = false;
         for (Iterator<CampaignLogReport> it = adNetwork.getWinCampaigns().iterator(); it.hasNext();) {
             CampaignLogReport clr = it.next();
-            if (clr.getDayEnd() >= adNetwork.getPendingCampaign().dayStart || clr.getDayStart() <= adNetwork.getPendingCampaign().dayEnd || (clr.getDayStart() <= adNetwork.getPendingCampaign().dayStart && clr.getDayEnd() >= adNetwork.getPendingCampaign().dayEnd) || (clr.getDayStart() >= adNetwork.getPendingCampaign().dayStart && clr.getDayEnd() <= adNetwork.getPendingCampaign().dayEnd)) {
+            if ((adNetwork.getPendingCampaign().dayEnd == clr.getDayStart() && adNetwork.getPendingCampaign().dayStart <= clr.getDayStart()) || (adNetwork.getPendingCampaign().dayStart <= clr.getDayStart() && adNetwork.getPendingCampaign().dayEnd >= clr.getDayStart()) || (adNetwork.getPendingCampaign().dayStart >= clr.getDayStart() && adNetwork.getPendingCampaign().dayEnd <= clr.getDayEnd()) || (adNetwork.getPendingCampaign().dayStart == clr.getDayEnd() && adNetwork.getPendingCampaign().dayEnd >= clr.getDayEnd())) {
                 isDaysConflictWithWinningCampaign = true;
                 break;
             }
@@ -105,7 +105,7 @@ public class HandleCampaignOpportunityMessage {
         boolean isDaysConflictWithOtherCampaign = false;
         for (Iterator<CampaignLogReport> it = adNetwork.getLostCampaigns().iterator(); it.hasNext();) {
             CampaignLogReport clr = it.next();
-            if (clr.getDayEnd() >= adNetwork.getPendingCampaign().dayStart || clr.getDayStart() <= adNetwork.getPendingCampaign().dayEnd || (clr.getDayStart() <= adNetwork.getPendingCampaign().dayStart && clr.getDayEnd() >= adNetwork.getPendingCampaign().dayEnd) || (clr.getDayStart() >= adNetwork.getPendingCampaign().dayStart && clr.getDayEnd() <= adNetwork.getPendingCampaign().dayEnd)) {
+            if ((adNetwork.getPendingCampaign().dayEnd == clr.getDayStart() && adNetwork.getPendingCampaign().dayStart <= clr.getDayStart()) || (adNetwork.getPendingCampaign().dayStart <= clr.getDayStart() && adNetwork.getPendingCampaign().dayEnd >= clr.getDayStart()) || (adNetwork.getPendingCampaign().dayStart >= clr.getDayStart() && adNetwork.getPendingCampaign().dayEnd <= clr.getDayEnd()) || (adNetwork.getPendingCampaign().dayStart == clr.getDayEnd() && adNetwork.getPendingCampaign().dayEnd >= clr.getDayEnd())) {
                 isDaysConflictWithOtherCampaign = true;
                 break;
             }
