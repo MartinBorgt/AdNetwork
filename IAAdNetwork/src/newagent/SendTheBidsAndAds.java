@@ -188,9 +188,10 @@ public class SendTheBidsAndAds {
 			 * t) by iterating all winning campaign
 			 */
 			double popSt = 0;
+			PredictImpressionCost predictImpressionCost = new PredictImpressionCost(adNetwork);
 			for (Iterator<MarketSegment> it = currentCampaign.getTargetSegment().iterator(); it.hasNext();) {
 				MarketSegment marketSegment = it.next();
-				popSt += predictOneDayPriceIndex(adNetwork, marketSegment, dayBiddingFor);
+				popSt += predictImpressionCost.predictOneDayPriceIndex(marketSegment, dayBiddingFor);
 			}
 			popSt = popSt / UserPopulationProbabilities.getProbability(currentCampaign.getTargetSegment());
 
