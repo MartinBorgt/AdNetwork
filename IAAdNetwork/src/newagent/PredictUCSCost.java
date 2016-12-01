@@ -1,6 +1,7 @@
 package newagent;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang3.Range;
@@ -33,23 +34,51 @@ public class PredictUCSCost {
 		 */
 		
 		// stores all the campaigns
-		Set<CampaignLogReport> camp = new HashSet<CampaignLogReport>();
-		camp.addAll(adNetwork.getLostCampaigns());
-		camp.addAll(adNetwork.getWinCampaigns());
+		List<CampaignLogReport> logReport = adNetwork.getLogReports();
+
+		CampaignData currCamp = adNetwork.getCurrCampaign();
+		CampaignLogReport currLog = null;
+
+		int UCSBidDay = adNetwork.getDay() + 1; 	// ucs bidding day
+		int dailyReach = 0;	// total reach on bidding day
 		
-		// campaings which runs on next bid day
-		Set<CampaignLogReport> matchedCamp = new HashSet<CampaignLogReport>();
-		
-		//
-		int UCSBidDay = adNetwork.getDay() + 1;
-		
-		for(CampaignLogReport cr: camp){
-			Range<Integer> campPeriod = Range.between(cr.getDayStart(), cr.getDayEnd() + 1);
-			if(campPeriod.contains(UCSBidDay)){
-				matchedCamp.add(cr);
+		for(CampaignLogReport cr: logReport){
+			Range<Integer> campRange = Range.between(cr.getDayStart(), cr.getDayEnd() + 1);
+			int period = (cr.getDayEnd() + 1) - cr.getDayStart();
+			
+			if(campRange.contains(UCSBidDay)){
+				int reach = (int) (cr.getTargetedImps() / period);
+				dailyReach += reach;
+			}
+			
+			if(currCamp.id == cr.getCampaignId()){
+				currLog = cr;
 			}
 		}
 		
-		return cost;
+		double previousLevel = currLog.getUcsLevel();
+		double previousUcsBid = currLog.getPrice();
+		double GUCS = 0.2; // can
+		double supply = 1000;
+		
+		double r = dailyReach; //total reach for the day
+		double p = dailyReach/supply; // demand/supply
+		double ro = 3/4 * dailyReach;
+		double pAvg = 0.9 * p;
+		double c = 1.00; // constant need to verify it value
+		
+		// ( r( (p - p')r - 2b(g + 1) ) )/2 + C
+		double utilityIncrement = (1/ro * ( ( (r * ( ((p - pAvg) * r) - (2 *  previousUcsBid * (GUCS + 1)) ) ) / 2 ) + c ) );
+		
+		double secondCondition = ( (20/3) * ((1 + GUCS) / utilityIncrement));
+		double roDivideBid = ro/previousUcsBid;
+		
+		if(previousLevel > 0.9){
+			return previousUcsBid / GUCS;
+		} else if(previousLevel < 0.8  && roDivideBid >= secondCondition){
+			return (1 + GUCS) * previousUcsBid;
+		} else {
+			return previousUcsBid;
+		}
 	}
 }
