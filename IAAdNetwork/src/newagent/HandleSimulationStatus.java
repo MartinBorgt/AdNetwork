@@ -65,8 +65,8 @@ public class HandleSimulationStatus {
             if (n > 0) {
                 if (campaignLogReport.getWinner() != null && campaignLogReport.getSecondPrice() == 0) {
                     adNetwork.getLostCampaigns().add(campaignLogReport);
-                    System.out.println("Campaign ID: " + campaignLogReport.getCampaignId() + " from day [" + campaignLogReport.getDayStart() + " to " + campaignLogReport.getDayEnd() + "] " + campaignLogReport.getTargetSegment() + " Reach Target: " + campaignLogReport.getReachImps() + " First Price: " + campaignLogReport.getBudgetMilis() + " Second Price: " + campaignLogReport.getSecondPrice() + " Service Level: " + campaignLogReport.getServiceLevel() + " Bank Status: " + campaignLogReport.getBankStatus());
-                    System.out.println("-----------------------------------");
+//                    System.out.println("Campaign ID: " + campaignLogReport.getCampaignId() + " from day [" + campaignLogReport.getDayStart() + " to " + campaignLogReport.getDayEnd() + "] " + campaignLogReport.getTargetSegment() + " Reach Target: " + campaignLogReport.getReachImps() + " First Price: " + campaignLogReport.getBudgetMilis() + " Second Price: " + campaignLogReport.getSecondPrice() + " Service Level: " + campaignLogReport.getServiceLevel() + " Bank Status: " + campaignLogReport.getBankStatus());
+//                    System.out.println("-----------------------------------");
                 }
             }
             n++;
@@ -105,8 +105,8 @@ public class HandleSimulationStatus {
                     }
                     if (sameTarget) {
                         adNetwork.getConflictingCampaigns().add(campaignLogReport1);
-                        System.out.println("Campaign ID: " + campaignLogReport1.getCampaignId() + " from day [" + campaignLogReport1.getDayStart() + " to " + campaignLogReport1.getDayEnd() + "] " + campaignLogReport1.getTargetSegment() + " Reach Target: " + campaignLogReport1.getReachImps() + " First Price: " + campaignLogReport1.getBudgetMilis() + " Second Price: " + campaignLogReport1.getSecondPrice() + " Service Level: " + campaignLogReport1.getServiceLevel() + " Bank Status: " + campaignLogReport1.getBankStatus());
-                        System.out.println("-----------------------------------");
+//                        System.out.println("Campaign ID: " + campaignLogReport1.getCampaignId() + " from day [" + campaignLogReport1.getDayStart() + " to " + campaignLogReport1.getDayEnd() + "] " + campaignLogReport1.getTargetSegment() + " Reach Target: " + campaignLogReport1.getReachImps() + " First Price: " + campaignLogReport1.getBudgetMilis() + " Second Price: " + campaignLogReport1.getSecondPrice() + " Service Level: " + campaignLogReport1.getServiceLevel() + " Bank Status: " + campaignLogReport1.getBankStatus());
+//                        System.out.println("-----------------------------------");
                     }
                 }
             }

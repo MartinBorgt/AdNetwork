@@ -122,7 +122,8 @@ public class SendTheBidsAndAds {
 		// adNetwork.getBidBundle().setCampaignDailyLimit(adNetwork.getCurrCampaign().id,
 		// (int) (budgetAvailable / impressionLimit), budgetAvailable);
 
-//		adNetwork.getBidBundle().addQuery(query, rbid, new Ad(null), adNetwork.getCurrCampaign().id, 1);
+		// adNetwork.getBidBundle().addQuery(query, rbid, new Ad(null),
+		// adNetwork.getCurrCampaign().id, 1);
 		// TODO: find best impression limit, probably as large as
 		// possible
 		// double impressionLimit = 1000000;
@@ -168,7 +169,10 @@ public class SendTheBidsAndAds {
 				MarketSegment marketSegment = it.next();
 				popSt += predictImpressionCost.predictOneDayPriceIndex(marketSegment, dayBiddingFor);
 			}
+			System.out.println("popularity before: " + popSt);
 			popSt = popSt / UserPopulationProbabilities.getProbability(currentCampaign.getTargetSegment());
+			System.out.println("popularity after: " + popSt + " divided by: "
+					+ UserPopulationProbabilities.getProbability(currentCampaign.getTargetSegment()));
 
 			double valueOfBid = popSt;
 			boolean reachSmall = false;
@@ -218,6 +222,9 @@ public class SendTheBidsAndAds {
 					budgetAvailable);
 			// adNetwork.getBidBundle().setCampaignDailyLimit(adNetwork.getCurrCampaign().id,
 			// (int) impressionLimit, budgetLimit);
+
+			System.out.println("impression limit: " + impressionLimit + " budget available: " + budgetAvailable
+					+ " impression bid: " + (budgetAvailable / impressionLimit));
 
 			System.out.println("Day " + adNetwork.getDay() + ": Updated " + entCount
 					+ " Bid Bundle entries for Campaign id " + adNetwork.getCurrCampaign().id);

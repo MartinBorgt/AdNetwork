@@ -1,9 +1,6 @@
 package newagent;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-
 import org.apache.commons.lang3.Range;
 
 public class PredictUCSCost {
@@ -17,8 +14,7 @@ public class PredictUCSCost {
 	 * parameter previous winning UCS bid and UCS level
 	 */
 	public double predictUCSCost() {
-		double cost = 0;
-
+		
 		/*
 		 * impression price rises when demand is more impression price falls
 		 * when supply is more r = minimum impression agent will reach tomorrow

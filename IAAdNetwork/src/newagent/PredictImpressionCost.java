@@ -54,11 +54,10 @@ public class PredictImpressionCost {
 		// System.out.println("testing 1");
 
 		double popularity = 0.00;
-		UserPopulationProbabilities usr = new UserPopulationProbabilities();
-
+		
 		for (CampaignLogReport r : matchedCampaigns) {
-			double reach = r.getTargetedImps();
-			int segmentPopulation = usr.getProbability(r.getTargetSegment());
+			double reach = r.getReachImps();
+			int segmentPopulation = UserPopulationProbabilities.getProbability(r.getTargetSegment());
 			int campaignPeriod = ((r.getDayEnd() + 1) - r.getDayStart());
 
 			double value = (reach / (segmentPopulation * campaignPeriod));
