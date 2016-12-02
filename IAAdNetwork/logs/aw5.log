@@ -1,15 +1,21 @@
-02/12 00:21:39 INFO agentware.SimClient|next simulation starts in 20 seconds
-02/12 00:21:47 SEVERE agentware.SimClient|************************************************************
-02/12 00:21:47 SEVERE agentware.SimClient|* ALERT: Multiple Connections
-02/12 00:21:47 SEVERE agentware.SimClient|* The server connection was closed due to new connection
-from agent donaldtrump@127.0.0.1.
-02/12 00:21:47 SEVERE agentware.SimClient|************************************************************
-02/12 00:21:47 SEVERE agentware.ServerConnection|(1) could not read
-java.io.EOFException
-	at java.io.DataInputStream.readInt(DataInputStream.java:392)
-	at tau.tac.adx.agentware.ServerConnection.run(ServerConnection.java:221)
-	at java.lang.Thread.run(Thread.java:745)
-02/12 00:21:47 SEVERE agentware.SimClient|************************************************************
-02/12 00:21:47 SEVERE agentware.SimClient|* Connection Lost
-02/12 00:21:47 SEVERE agentware.SimClient|* Lost connection to localhost (will reconnect in 30 seconds)
-02/12 00:21:47 SEVERE agentware.SimClient|************************************************************
+02/12 17:03:16 SEVERE agentware.ServerConnection|(1) connection to server failed
+java.net.ConnectException: Connection refused: connect
+	at java.net.DualStackPlainSocketImpl.connect0(Native Method)
+	at java.net.DualStackPlainSocketImpl.socketConnect(Unknown Source)
+	at java.net.AbstractPlainSocketImpl.doConnect(Unknown Source)
+	at java.net.AbstractPlainSocketImpl.connectToAddress(Unknown Source)
+	at java.net.AbstractPlainSocketImpl.connect(Unknown Source)
+	at java.net.PlainSocketImpl.connect(Unknown Source)
+	at java.net.SocksSocketImpl.connect(Unknown Source)
+	at java.net.Socket.connect(Unknown Source)
+	at java.net.Socket.connect(Unknown Source)
+	at java.net.Socket.<init>(Unknown Source)
+	at java.net.Socket.<init>(Unknown Source)
+	at tau.tac.adx.agentware.ServerConnection.connect(ServerConnection.java:136)
+	at tau.tac.adx.agentware.ServerConnection.run(ServerConnection.java:199)
+	at java.lang.Thread.run(Unknown Source)
+02/12 17:03:16 SEVERE agentware.SimClient|************************************************************
+02/12 17:03:16 SEVERE agentware.SimClient|* Connection Failed
+02/12 17:03:16 SEVERE agentware.SimClient|* Could not connect to localhost (will retry in 30 seconds)
+02/12 17:03:16 SEVERE agentware.SimClient|************************************************************
+02/12 17:03:46 INFO agentware.SimClient|next simulation starts in 13 seconds
