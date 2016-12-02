@@ -1,5 +1,6 @@
 /*
  * To change this template, choose Tools | Templates
+ * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
 package newagent;
@@ -213,7 +214,7 @@ public class SendTheBidsAndAds {
 						}
 
 					}
-					adNetwork.getBidBundle().addQuery(query, budgetAvailable / impressionLimit, new Ad(null),
+					adNetwork.getBidBundle().addQuery(query, (budgetAvailable / impressionLimit)*10000000, new Ad(null),
 							adNetwork.getCurrCampaign().id, 1);
 				}
 			}
@@ -224,7 +225,7 @@ public class SendTheBidsAndAds {
 			// (int) impressionLimit, budgetLimit);
 
 			System.out.println("impression limit: " + impressionLimit + " budget available: " + budgetAvailable
-					+ " impression bid: " + (budgetAvailable / impressionLimit));
+					+ " impression bid: " + ((budgetAvailable / impressionLimit)*10000000));
 
 			System.out.println("Day " + adNetwork.getDay() + ": Updated " + entCount
 					+ " Bid Bundle entries for Campaign id " + adNetwork.getCurrCampaign().id);

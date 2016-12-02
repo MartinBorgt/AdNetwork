@@ -116,7 +116,7 @@ public class HandleCampaignOpportunityMessage {
          */
         if(isConflictWithWinningCampaign){
             System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-            System.out.println("@ WARNING This campaign conflict with our winning campaign! @");
+            System.out.println("@ WARNING This campaign conflict with our winning campaign!@");
             System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
         }
         if(isConflictWithOtherCampaign){
@@ -190,6 +190,10 @@ public class HandleCampaignOpportunityMessage {
         /*
          * Note: Campaign bid is in millis
          */
+//        PredictUCSCost ucsCost = new PredictUCSCost(adNetwork);
+//        System.out.println("UCS Cost Prediction: " + ucsCost.predictUCSCost());
+//        AdNetBidMessage bids = new AdNetBidMessage(ucsCost.predictUCSCost(), adNetwork.getPendingCampaign().id, cmpBidMillis);
+//        adNetwork.sendResponse(adNetwork.getDemandAgentAddress(), bids);
         AdNetBidMessage bids = new AdNetBidMessage(adNetwork.getUcsBid(), adNetwork.getPendingCampaign().id, cmpBidMillis);
         adNetwork.sendResponse(adNetwork.getDemandAgentAddress(), bids);
     }
