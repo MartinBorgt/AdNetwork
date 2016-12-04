@@ -136,12 +136,10 @@ public class SendTheBidsAndAds {
 		// budgetLimit);
 		// }
 		// } else
-		System.out.println("Impressions debug");
 		if ((dayBiddingFor >= adNetwork.getCurrCampaign().dayStart)
 				&& (dayBiddingFor <= adNetwork.getCurrCampaign().dayEnd)
 				&& (adNetwork.getCurrCampaign().impsTogo() > 0)) {
-			System.out.println("Impressions for : "+adNetwork.getCurrCampaign());
-			
+
 			int entCount = 0;
 
 			/*
@@ -156,17 +154,11 @@ public class SendTheBidsAndAds {
 				}
 			}
 
-			System.out.println("currentCampaign : "+currentCampaign);
 			double totalImpCost = currentCampaign.getCost();
-			System.out.println("totalImpCost : "+totalImpCost);
 			double impressionLimit = adNetwork.getCurrCampaign().impsTogo();
-			System.out.println("impressionLimit : "+impressionLimit);
 			double budgetLimit = adNetwork.getCurrCampaign().budget - totalImpCost;
-			System.out.println("budgetLimit : "+budgetLimit);
 			double n = impressionLimit / currentCampaign.getReachImps();
-			System.out.println("n : "+n);
 			double budgetAvailable = budgetLimit * 0.9;
-			System.out.println("budgetAvailable : "+budgetAvailable);
 
 			/*
 			 * Calculate how much the value is of bids on this day using pop(s,
@@ -179,11 +171,6 @@ public class SendTheBidsAndAds {
 				popSt += predictImpressionCost.predictOneDayPriceIndex(marketSegment, dayBiddingFor);
 			}
 			System.out.println("popularity before: " + popSt);
-			
-			//Hari: check the lines below against eachother
-			//budgetAvailable = popSt * 0.9;
-			if (budgetAvailable < popSt * 0.9) budgetAvailable = popSt * 0.9;
-			
 			popSt = popSt / UserPopulationProbabilities.getProbability(currentCampaign.getTargetSegment());
 			System.out.println("popularity after: " + popSt + " divided by: "
 					+ UserPopulationProbabilities.getProbability(currentCampaign.getTargetSegment()));
@@ -192,19 +179,16 @@ public class SendTheBidsAndAds {
 			boolean reachSmall = false;
 			if (UserPopulationProbabilities.getProbability(currentCampaign.getTargetSegment()) > impressionLimit) {
 				reachSmall = true;
-				System.out.println("The reach to go is small");
 			}
 
 			if (valueOfBid > budgetAvailable && reachSmall) {
 				budgetAvailable = UserPopulationProbabilities.getProbability(currentCampaign.getTargetSegment())
 						* impressionLimit;
-				System.out.println("We will try to finish our bidding this round by raising the limit");
 			}
 
 			double ni = 1 - (1 / ((currentCampaign.getDayEnd() - currentCampaign.getDayStart()) - 1));
 			if (dayBiddingFor == currentCampaign.getDayEnd() && n < ni) {
 				budgetAvailable = 2 * budgetAvailable;
-				System.out.println("last day and a lot to go so double bids");
 			}
 
 			for (AdxQuery query : adNetwork.getCurrCampaign().campaignQueries) {

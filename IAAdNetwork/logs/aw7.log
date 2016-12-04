@@ -1,1 +1,31 @@
-02/12 00:16:08 INFO agentware.SimClient|next simulation starts in 51 seconds
+02/12 16:38:54 INFO agentware.SimClient|next simulation 36 has already started
+02/12 16:38:59 SEVERE agentware.SimClient|************************************************************
+02/12 16:38:59 SEVERE agentware.SimClient|* ALERT: Multiple Connections
+02/12 16:38:59 SEVERE agentware.SimClient|* The server connection was closed due to new connection
+from agent donaldtrump@127.0.0.1.
+02/12 16:38:59 SEVERE agentware.SimClient|************************************************************
+02/12 16:38:59 SEVERE agentware.ServerConnection|(1) could not read
+java.io.EOFException
+	at java.io.DataInputStream.readInt(Unknown Source)
+	at tau.tac.adx.agentware.ServerConnection.run(ServerConnection.java:221)
+	at java.lang.Thread.run(Unknown Source)
+02/12 16:38:59 SEVERE agentware.SimClient|************************************************************
+02/12 16:38:59 SEVERE agentware.SimClient|* Connection Lost
+02/12 16:38:59 SEVERE agentware.SimClient|* Lost connection to localhost (will reconnect in 30 seconds)
+02/12 16:38:59 SEVERE agentware.SimClient|************************************************************
+02/12 16:39:29 INFO agentware.SimClient|next simulation starts in 30 seconds
+02/12 16:39:32 SEVERE agentware.SimClient|************************************************************
+02/12 16:39:32 SEVERE agentware.SimClient|* ALERT: Multiple Connections
+02/12 16:39:32 SEVERE agentware.SimClient|* The server connection was closed due to new connection
+from agent donaldtrump@127.0.0.1.
+02/12 16:39:32 SEVERE agentware.SimClient|************************************************************
+02/12 16:39:32 SEVERE agentware.ServerConnection|(2) could not read
+java.io.EOFException
+	at java.io.DataInputStream.readInt(Unknown Source)
+	at tau.tac.adx.agentware.ServerConnection.run(ServerConnection.java:221)
+	at java.lang.Thread.run(Unknown Source)
+02/12 16:39:32 SEVERE agentware.SimClient|************************************************************
+02/12 16:39:32 SEVERE agentware.SimClient|* Connection Lost
+02/12 16:39:32 SEVERE agentware.SimClient|* Lost connection to localhost (will reconnect in 30 seconds)
+02/12 16:39:32 SEVERE agentware.SimClient|************************************************************
+02/12 16:40:02 INFO agentware.SimClient|next simulation 37 has already started
