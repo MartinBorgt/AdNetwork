@@ -36,13 +36,13 @@ public class PredictImpressionCost {
 	 * return segment bid value
 	 */
 	public double predictOneDayPriceIndex(MarketSegment segment, int currentDay) {
-
+		
 		List<CampaignLogReport> totalCampaigns = new ArrayList<CampaignLogReport>();
 		List<CampaignLogReport> matchedCampaigns = new ArrayList<CampaignLogReport>();
 		
 		totalCampaigns.addAll(adNetwork.getLostCampaigns());
 		totalCampaigns.addAll(adNetwork.getWinCampaigns());
-
+		
 		for (CampaignLogReport camp : totalCampaigns) {
 			Range<Integer> campPeriod = Range.between(camp.getDayStart(), camp.getDayEnd() + 1);
 
@@ -53,14 +53,18 @@ public class PredictImpressionCost {
 
 		// System.out.println("testing 1");
 
-		double popularity = 0.00;
+		CampaignData pendCamp = adNetwork.getPendingCampaign();
+
+		UserPopulationProbabilities usr = new UserPopulationProbabilities();
+		double popularity = ((double) pendCamp.impsTogo())/((double)(usr.getProbability(pendCamp.targetSegment)*(pendCamp.dayEnd-pendCamp.dayStart + 1)));
 		
 		for (CampaignLogReport r : matchedCampaigns) {
 			double reach = r.getReachImps();
-			int segmentPopulation = UserPopulationProbabilities.getProbability(r.getTargetSegment());
+			usr = new UserPopulationProbabilities();
+			int segmentPopulation = usr.getProbability(r.getTargetSegment());
 			int campaignPeriod = ((r.getDayEnd() + 1) - r.getDayStart());
 
-			double value = (reach / (segmentPopulation * campaignPeriod));
+			double value = (((double)reach) / ((double)(segmentPopulation * campaignPeriod)));
 			popularity += value;
 		}
 
