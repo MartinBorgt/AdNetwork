@@ -13,7 +13,7 @@ public class PredictUCSCost {
 	/*
 	 * parameter previous winning UCS bid and UCS level
 	 */
-	public double predictUCSCost() {
+	public double predictUCSCost(double ucsLevel, double ucsBid) {
 		
 		/*
 		 * impression price rises when demand is more impression price falls
@@ -43,25 +43,25 @@ public class PredictUCSCost {
 			int period = (cr.getDayEnd() + 1) - cr.getDayStart();
 			
 			if(campRange.contains(UCSBidDay)){
-				int reach = (int) (cr.getTargetedImps() / period);
+				int reach = (int) (cr.getReachImps() / period);
+				System.out.println("Reach UCS test 2 " + reach);
 				dailyReach += reach;
-			}
-			
-			if(currCamp.id == cr.getCampaignId()){
-				currLog = cr;
+				System.out.println("Daily Reach UCS test 3 " + dailyReach);
 			}
 		}
 		
-		double previousLevel = currLog.getUcsLevel();
-		double previousUcsBid = currLog.getPrice();
+		double previousLevel = ucsLevel;
+		double previousUcsBid = ucsBid;
 		double GUCS = 0.2; // can
 		double supply = 1000;
+		
+		System.out.println("UCS test 2 previous level " + previousLevel + " previous bid " + previousUcsBid);
 		
 		double r = dailyReach; //total reach for the day
 		double p = dailyReach/supply; // demand/supply
 		double ro = 3/4 * dailyReach;
 		double pAvg = 0.9 * p;
-		double c = 1.00; // constant need to verify it value
+		double c = 0.00; // constant need to verify it value
 		
 		// ( r( (p - p')r - 2b(g + 1) ) )/2 + C
 		double utilityIncrement = (1/ro * ( ( (r * ( ((p - pAvg) * r) - (2 *  previousUcsBid * (GUCS + 1)) ) ) / 2 ) + c ) );
@@ -70,7 +70,7 @@ public class PredictUCSCost {
 		double roDivideBid = ro/previousUcsBid;
 		
 		if(previousLevel > 0.9){
-			return previousUcsBid / GUCS;
+			return previousUcsBid / (1 + GUCS);
 		} else if(previousLevel < 0.8  && roDivideBid >= secondCondition){
 			return (1 + GUCS) * previousUcsBid;
 		} else {

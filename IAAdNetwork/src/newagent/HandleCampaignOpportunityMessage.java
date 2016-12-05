@@ -161,10 +161,17 @@ public class HandleCampaignOpportunityMessage {
          * Adjust ucs bid s.t. target level is achieved. Note: The bid for the
          * user classification service is piggybacked
          */
-
+        PredictUCSCost ucs = new PredictUCSCost(adNetwork);
+        
         if (adNetwork.getAdNetworkDailyNotification() != null) {
             double ucsLevel = adNetwork.getAdNetworkDailyNotification().getServiceLevel();
-            adNetwork.setUcsBid(0.1 + random.nextDouble() / 10.0);
+            double ucsTargetBid = adNetwork.getAdNetworkDailyNotification().getPrice();
+            
+            double ucsCost = ucs.predictUCSCost(ucsLevel, ucsTargetBid);
+            adNetwork.setUcsBid(ucsCost);
+            System.out.println("UCS Cost " + ucsCost);
+            
+            //adNetwork.setUcsBid(0.1 + random.nextDouble() / 10.0);
             System.out.println("Day " + adNetwork.getDay() + ": ucs level reported: " + ucsLevel);
         } else {
             System.out.println("Day " + adNetwork.getDay() + ": Initial ucs bid is " + adNetwork.getUcsBid());
