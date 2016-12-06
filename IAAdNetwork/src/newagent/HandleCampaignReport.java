@@ -46,6 +46,14 @@ public class HandleCampaignReport {
                     adNetwork.getLogReports().get(i).setCost(cstats.getCost());
                 }
             }
+
+            for (int i = 0; i < adNetwork.getWinCampaigns().size(); i++) {
+                if(adNetwork.getWinCampaigns().get(i).getCampaignId() == cmpId){
+                    adNetwork.getWinCampaigns().get(i).setTargetedImps(cstats.getTargetedImps());
+                    adNetwork.getWinCampaigns().get(i).setOtherImps(cstats.getOtherImps());
+                    adNetwork.getWinCampaigns().get(i).setCost(cstats.getCost());
+                }
+            }
         }
 
     }

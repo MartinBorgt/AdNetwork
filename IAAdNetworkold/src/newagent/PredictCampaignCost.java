@@ -1,7 +1,6 @@
 package newagent;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -34,49 +33,34 @@ public class PredictCampaignCost {
 	 * return segment bid value
 	 * 
 	 */
-	public double predictMultidayPriceIndex(SampleAdNetworkModified adNetwork){
+	public double predictMultidayPriceIndex(SampleAdNetworkModified adNetwork) {
 		
-		CampaignData pendCamp = adNetwork.getPendingCampaign();
+		CampaignData currCamp = adNetwork.getCurrCampaign();
 		
-		Set<MarketSegment> segment = pendCamp.targetSegment;
+		Set<MarketSegment> segment = currCamp.targetSegment;
 		
-		int campPeriod = (int) ((pendCamp.dayEnd + 1) - pendCamp.dayStart);
+		int campPeriod = (int) ((currCamp.dayEnd + 1) - currCamp.dayStart);
 
 		double popularity = 0.00;
 		double storeValue = 0.00;
 
+		UserPopulationProbabilities usr = new UserPopulationProbabilities();
 		SendTheBidsAndAds sendBid = new SendTheBidsAndAds();
 		
 		PredictImpressionCost predictImp = new PredictImpressionCost(adNetwork);
 
 		for (MarketSegment s : segment) {
-			Set<MarketSegment> singleSeg = new HashSet<MarketSegment>(Arrays.asList(s));
+			Set<MarketSegment> singleSeg = new HashSet<MarketSegment>();
 
-			for (int i = (int) pendCamp.dayStart; i <= pendCamp.dayEnd; i++) {
-				UserPopulationProbabilities usr = new UserPopulationProbabilities();
+			for (int i = (int) currCamp.dayStart; i <= currCamp.dayEnd; i++) {
 				double population = usr.getProbability(singleSeg);
 				double segmentPopularity = predictImp.predictOneDayPriceIndex(s, i);
 				storeValue += (population * segmentPopularity);
 			}
 		}
-		UserPopulationProbabilities usr = new UserPopulationProbabilities();
+
 		popularity = (storeValue / (campPeriod * usr.getProbability(segment)));
-		
-		//popularity = (storeValue / ((double)usr.getProbability(segment)));
-		storeValue = storeValue / usr.getProbability(segment);
-		System.out.println("popularity after normalization: " + storeValue);
-		System.out.println("or: " + storeValue / campPeriod);
-		System.out.println("Days running: " + campPeriod);
-		System.out.println("group size: " + usr.getProbability(segment));
-		
-		//System.out.println("popularity bid: " + popularity);
-		//System.out.println("popularity bid divided by campaign length: " + (storeValue / ((double)(campPeriod * usr.getProbability(segment)))));
-		popularity = ((double) storeValue) / ((double)(campPeriod * usr.getProbability(segment)));
-		if(popularity > 0.001) popularity = 0.001;
-		if(popularity < 0.0001) popularity = 0.001;
-		//Since bids are capped to reach we normalize it before sending it out
-		popularity = (double)(pendCamp.reachImps)* popularity;
-		System.out.println("popularity bid: " + popularity);
+
 		return popularity;
 	}
 	

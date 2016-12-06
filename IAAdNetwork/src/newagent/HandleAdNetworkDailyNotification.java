@@ -57,6 +57,7 @@ public class HandleAdNetworkDailyNotification {
                     st.nextToken();
                     adNetwork.getLogReports().get(i).setSecondPrice(Long.parseLong(st.nextToken()));
                 }
+                adNetwork.getLogReports().get(i).setCampaignQueries(adNetwork.getCurrCampaign().campaignQueries);
                 adNetwork.getLogReports().get(i).setServiceLevel(notificationMessage.getServiceLevel());
                 adNetwork.getLogReports().get(i).setQualityScore(notificationMessage.getQualityScore());
                 adNetwork.getLogReports().get(i).setPrice(notificationMessage.getPrice());

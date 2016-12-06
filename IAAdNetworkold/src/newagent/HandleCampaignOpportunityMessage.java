@@ -4,7 +4,6 @@
  */
 package newagent;
 
-import newagent.PredictCampaignCost;
 import java.util.Iterator;
 import java.util.Random;
 
@@ -115,63 +114,49 @@ public class HandleCampaignOpportunityMessage {
         /*
          * Conflict Debug
          */
-        int multiplier = 1;
         if(isConflictWithWinningCampaign){
             System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
             System.out.println("@ WARNING This campaign conflict with our winning campaign!@");
             System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-            multiplier *= 1;
         }
         if(isConflictWithOtherCampaign){
             System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
             System.out.println("@ WARNING This campaign conflict with other campaign!      @");
             System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-            multiplier *= 1;
         }
         if(isDaysConflictWithWinningCampaign){
             System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
             System.out.println("@ WARNING duration days conflict with our winning campaign!@");
             System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-            multiplier *= 1;
         }
         if(isDaysConflictWithOtherCampaign){
             System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
             System.out.println("@ WARNING duration days conflict with other campaign!      @");
             System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-            multiplier *= 1;
-        }
-        if(adNetwork.getDay() <= 5){
-        	multiplier *= 2;
         }
         
         Random random = new Random();
-        long cmpimps = com.getReachImps() * multiplier;
+        long cmpimps = com.getReachImps();
         
         /*
          * During the first five days we do not want to take on a campaign
          * in order to not compete with every opponent for impressions
          */
         long cmpBidMillis = random.nextInt((int) cmpimps);
-        //cmpBidMillis = (long) (new PredictCampaignCost(adNetwork).predictMultidayPriceIndex(adNetwork) * 1000)*multiplier;
-        cmpBidMillis = (long) (new PredictCampaignCost(adNetwork).predictMultidayPriceIndex(adNetwork) * 1000);
-      
+        if(adNetwork.getDay() <= 5){
+        	cmpBidMillis = cmpimps * 2;
+        }
+
         System.out.println("Day " + adNetwork.getDay() + ": Campaign total budget bid (millis): " + cmpBidMillis);
 
         /*
          * Adjust ucs bid s.t. target level is achieved. Note: The bid for the
          * user classification service is piggybacked
          */
-        PredictUCSCost ucs = new PredictUCSCost(adNetwork);
-        
+
         if (adNetwork.getAdNetworkDailyNotification() != null) {
             double ucsLevel = adNetwork.getAdNetworkDailyNotification().getServiceLevel();
-            double ucsTargetBid = adNetwork.getAdNetworkDailyNotification().getPrice();
-            
-            double ucsCost = ucs.predictUCSCost(ucsLevel, ucsTargetBid);
-            adNetwork.setUcsBid(ucsCost);
-            System.out.println("UCS Cost " + ucsCost);
-            
-            //adNetwork.setUcsBid(0.1 + random.nextDouble() / 10.0);
+            adNetwork.setUcsBid(0.1 + random.nextDouble() / 10.0);
             System.out.println("Day " + adNetwork.getDay() + ": ucs level reported: " + ucsLevel);
         } else {
             System.out.println("Day " + adNetwork.getDay() + ": Initial ucs bid is " + adNetwork.getUcsBid());
@@ -209,7 +194,6 @@ public class HandleCampaignOpportunityMessage {
 //        System.out.println("UCS Cost Prediction: " + ucsCost.predictUCSCost());
 //        AdNetBidMessage bids = new AdNetBidMessage(ucsCost.predictUCSCost(), adNetwork.getPendingCampaign().id, cmpBidMillis);
 //        adNetwork.sendResponse(adNetwork.getDemandAgentAddress(), bids);
-        
         AdNetBidMessage bids = new AdNetBidMessage(adNetwork.getUcsBid(), adNetwork.getPendingCampaign().id, cmpBidMillis);
         adNetwork.sendResponse(adNetwork.getDemandAgentAddress(), bids);
     }
