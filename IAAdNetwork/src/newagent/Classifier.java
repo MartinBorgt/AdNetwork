@@ -6,6 +6,7 @@ package newagent;
 */
 import weka.core.Instances;
 import weka.classifiers.bayes.NaiveBayes;
+import weka.classifiers.functions.LinearRegression;
 import weka.classifiers.lazy.IBk;
 import weka.core.converters.ArffSaver;
 import weka.core.converters.ConverterUtils.DataSource;
@@ -35,13 +36,13 @@ public class Classifier {
 	Instances impTrainingDataset;
 	Instances ucsTrainingDataset;
 	
-	String impFilename = "/arff/Impdata.arff";
-	String ucsFilename = "/arff/UCSdata.arff";
+	String impFilename = "../../data/impdataset.arff";
+	String ucsFilename = "../../data/ucsdataset.arff";
 	
 	FileWriter writer;
 	
 	// creating classifier object for imp
-	IBk impIbk = new IBk();
+	LinearRegression impLR = new LinearRegression();
 	
 	// creating classifier object for ucs
 	IBk ucsIbk = new IBk();
@@ -73,11 +74,8 @@ public class Classifier {
 
 		try {
 			// train the classifier
-			impIbk.buildClassifier(impTrainingDataset);
+			impLR.buildClassifier(impTrainingDataset);
 			ucsIbk.buildClassifier(ucsTrainingDataset);
-			
-			System.out.println(impIbk.getCapabilities().toString());
-			System.out.println(ucsIbk.getCapabilities().toString());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -85,13 +83,14 @@ public class Classifier {
 	}
 	
 	// Note - need to be called day before campaign finishes
-	public void addImpInstance(){		
+	public void addImpInstance(double totalPay, double reachedImpression){	
 		// creating empty instance with three attribute
 		// Adv. price-index (segment popularity), segment, at day t
 		Instance data = new DenseInstance(3);
 		
-		double totalPayment = 0.00; // total payment for campaign
-		double reachedImp = 0.00; // total reach for campaign on final day
+		double totalPayment = totalPay; // total payment for campaign
+		double reachedImp = reachedImpression; // total reach for campaign on final day
+		
 		double pi = totalPayment / reachedImp;
 		
 		PredictImpressionCost predCost = new PredictImpressionCost(adNetwork);
@@ -102,9 +101,9 @@ public class Classifier {
 			MarketSegment marketSegment = it.next();
 			double popSt = predCost.predictAdvancePriceIndex(marketSegment, dayBiddingFor);
 			
-			data.setValue(impTrainingDataset.attribute(0), pi); // pi
-			data.setValue(impTrainingDataset.attribute(1), popSt); // segment
-			data.setValue(impTrainingDataset.attribute(2), dayBiddingFor); // campaign final day
+			data.setValue(impTrainingDataset.attribute(0), popSt); // segment
+			data.setValue(impTrainingDataset.attribute(1), dayBiddingFor); // campaign final day
+			data.setValue(impTrainingDataset.attribute(2), pi); // pi
 		}
 
 		// Set instance's dataset to be the dataset "race" 
@@ -125,21 +124,19 @@ public class Classifier {
 		
 	}
 	
-	public String getImpClass(){
-		int pred = 0;
-		String impClass = "No class";
+	public Double getImpClass(){
+		double pred = 0.00;
 		
 		try {
 			Instance data = impTrainingDataset.lastInstance();
 			if(data != null){
-				pred = (int) impIbk.classifyInstance(data);
-				impClass = impTrainingDataset.classAttribute().value(pred);
+				pred = impLR.classifyInstance(data);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
-		return impClass;
+		return pred;
 	}
 	
 	// Note goes in campaign opportunity class
@@ -149,9 +146,9 @@ public class Classifier {
 		
 		// need to figure out what attribute should ucs classifier have from current won campaign using adnetwork
 		// Set instance's values for the attributes "length", "weight", and "position"
-		data.setValue(ucsTrainingDataset.attribute(0), ucsLevel); 
-		data.setValue(ucsTrainingDataset.attribute(1), ucsBid); 
-		data.setValue(ucsTrainingDataset.attribute(0), day); 
+		data.setValue(ucsTrainingDataset.attribute(0), ucsLevel);  
+		data.setValue(ucsTrainingDataset.attribute(1), day);
+		data.setValue(ucsTrainingDataset.attribute(2), ucsBid);
 
 		// Set instance's dataset to be the dataset "race" 
 		data.setDataset(ucsTrainingDataset);

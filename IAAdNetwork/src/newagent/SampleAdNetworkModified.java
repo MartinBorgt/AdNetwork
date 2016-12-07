@@ -86,7 +86,12 @@ public class SampleAdNetworkModified extends Agent {
      * The current bid level for the user classification service
      */
     double ucsBid;
-
+    
+    /*
+     * The current IC value 
+     */
+    public double ICvalue = 2;
+    
     /*
      * The targeted service level for the user classification service
      */

@@ -4,6 +4,7 @@
  */
 package newagent;
 
+import java.util.Iterator;
 import java.util.StringTokenizer;
 import tau.tac.adx.report.demand.AdNetworkDailyNotification;
 
@@ -39,13 +40,39 @@ public class HandleAdNetworkDailyNotification {
 
             campaignAllocatedTo = " WON at cost (Millis)"
                     + notificationMessage.getCostMillis();
+            
+            /*
+             * Update ICvalue 
+             */
+            adNetwork.ICvalue *= 4;
         }
-
+        else{
+            /*
+             * Update ICvalue 
+             */
+            adNetwork.ICvalue *= 0.9;
+        }
         System.out.println("Day " + adNetwork.getDay() + ": " + campaignAllocatedTo
                 + ". UCS Level set to " + notificationMessage.getServiceLevel()
                 + " at price " + notificationMessage.getPrice()
                 + " Quality Score is: " + notificationMessage.getQualityScore());
-
+        
+        // collecting and adding instances to trainning dataset
+		Classifier classify = new Classifier(adNetwork);
+		
+		for (Iterator<CampaignLogReport> it = adNetwork.getWinCampaigns().iterator(); it.hasNext();) {
+			CampaignLogReport winningCampaign = it.next();
+			double currDay = adNetwork.getDay();
+			double imptogo = Math.max(0, winningCampaign.getReachImps() - winningCampaign.getTargetedImps());
+			
+			if(winningCampaign.getDayEnd() == currDay){
+				classify.addImpInstance(winningCampaign.getPrice(), imptogo );
+			}
+		}
+		
+		classify.addUcsInstance(notificationMessage.getServiceLevel(), notificationMessage.getPrice(), adNetwork.getDay());
+		
+        
         /*
          * Record Log
          */
@@ -57,7 +84,6 @@ public class HandleAdNetworkDailyNotification {
                     st.nextToken();
                     adNetwork.getLogReports().get(i).setSecondPrice(Long.parseLong(st.nextToken()));
                 }
-                adNetwork.getLogReports().get(i).setCampaignQueries(adNetwork.getCurrCampaign().campaignQueries);
                 adNetwork.getLogReports().get(i).setServiceLevel(notificationMessage.getServiceLevel());
                 adNetwork.getLogReports().get(i).setQualityScore(notificationMessage.getQualityScore());
                 adNetwork.getLogReports().get(i).setPrice(notificationMessage.getPrice());
