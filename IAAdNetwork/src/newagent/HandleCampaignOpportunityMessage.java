@@ -160,6 +160,8 @@ public class HandleCampaignOpportunityMessage {
         /*
          * Adjust ucs bid s.t. target level is achieved. Note: The bid for the
          * user classification service is piggybacked
+         * 
+         * classifier should be impemented here to check for predicted ucs value
          */
         PredictUCSCost ucs = new PredictUCSCost(adNetwork);
         

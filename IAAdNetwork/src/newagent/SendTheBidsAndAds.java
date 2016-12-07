@@ -306,11 +306,13 @@ public class SendTheBidsAndAds {
 						 */
 						double popSt = 0;
 						PredictImpressionCost predictImpressionCost = new PredictImpressionCost(adNetwork);
+						
 						for (Iterator<MarketSegment> it2 = currentCampaign.getTargetSegment().iterator(); it2
 								.hasNext();) {
 							MarketSegment marketSegment = it2.next();
 							popSt += predictImpressionCost.predictOneDayPriceIndex(marketSegment, dayBiddingFor);
 						}
+						
 						System.out.println("popularity before: " + popSt);
 
 						// Hari: check the lines below against eachother
@@ -395,41 +397,5 @@ public class SendTheBidsAndAds {
 		} catch (Exception e) {
 			System.out.println(e);
 		}
-	}
-
-	// need working
-	public double predictCampaignCost(SampleAdNetworkModified adNetwork) {
-		/*
-		 * bid lower when winning contract is important big higher when contract
-		 * is too difficult to complete(based on Price Index value) minimun
-		 * campaign budget = impression cost + UCS level cost
-		 * 
-		 * if we have higher Quality rating, it will make profit
-		 */
-		double bidValue = 0;
-
-		return bidValue;
-	}
-
-	// need working
-	public double predictImpressionCost(SampleAdNetworkModified adNetwork) {
-		/*
-		 * publisher initial reserve price 0.005 always impression cost should
-		 * be higher than publisher RP check in % of completion of contract
-		 * 
-		 * get campaign data (reachImp, start date, end date, target segment,
-		 * videoceof, mobileceof)
-		 * 
-		 * check the length of campaing
-		 * 
-		 * if Too little budget with small reach then budget = RContractMax
-		 * (0.001) · budget;
-		 * 
-		 * if Only one day left and amount of completion < amount to be
-		 * completed (maximise quality rating) then Double the budget; return
-		 * budget/reach;
-		 */
-		double bidValue = 0.00;
-		return bidValue;
 	}
 }

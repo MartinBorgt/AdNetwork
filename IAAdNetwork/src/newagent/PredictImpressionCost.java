@@ -2,6 +2,7 @@ package newagent;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import org.apache.commons.lang3.Range;
 
@@ -10,6 +11,13 @@ import tau.tac.adx.report.adn.MarketSegment;
 public class PredictImpressionCost {
 	
 	SampleAdNetworkModified adNetwork;
+	
+	List<CampaignLogReport> totalCampaigns;
+	List<CampaignLogReport> matchedCampaigns;
+	
+	// keeping our completion rate high
+	double max = 1.2;
+	double min = 0.8;
 	
 	public PredictImpressionCost(SampleAdNetworkModified adNet){
 		this.adNetwork = adNet;
@@ -37,9 +45,6 @@ public class PredictImpressionCost {
 	 */
 	public double predictOneDayPriceIndex(MarketSegment segment, int currentDay) {
 		
-		List<CampaignLogReport> totalCampaigns = new ArrayList<CampaignLogReport>();
-		List<CampaignLogReport> matchedCampaigns = new ArrayList<CampaignLogReport>();
-		
 		totalCampaigns.addAll(adNetwork.getLostCampaigns());
 		totalCampaigns.addAll(adNetwork.getWinCampaigns());
 		
@@ -50,8 +55,6 @@ public class PredictImpressionCost {
 				matchedCampaigns.add(camp);
 			}
 		}
-
-		// System.out.println("testing 1");
 
 		CampaignData pendCamp = adNetwork.getPendingCampaign();
 
@@ -65,6 +68,43 @@ public class PredictImpressionCost {
 			int campaignPeriod = ((r.getDayEnd() + 1) - r.getDayStart());
 
 			double value = (((double)reach) / ((double)(segmentPopulation * campaignPeriod)));
+			popularity += value;
+		}
+
+		return popularity;
+	}
+	
+	// price index based on random completion rate
+	public double predictAdvancePriceIndex(MarketSegment segment, int currentDay) {
+		
+		totalCampaigns.addAll(adNetwork.getLostCampaigns());
+		totalCampaigns.addAll(adNetwork.getWinCampaigns());
+		
+		Random random = new Random();
+		
+        double scale = (max - min);
+        double n = scale*random.nextDouble() + min; //completion rate of contract
+		
+		for (CampaignLogReport camp : totalCampaigns) {
+			Range<Integer> campPeriod = Range.between(camp.getDayStart(), camp.getDayEnd() + 1);
+
+			if (camp.getTargetSegment().contains(segment) && campPeriod.contains(currentDay)) {
+				matchedCampaigns.add(camp);
+			}
+		}
+
+		CampaignData pendCamp = adNetwork.getPendingCampaign();
+
+		UserPopulationProbabilities usr = new UserPopulationProbabilities();
+		double popularity = ((double) pendCamp.impsTogo())/((double)(usr.getProbability(pendCamp.targetSegment)*(pendCamp.dayEnd-pendCamp.dayStart + 1)));
+		
+		for (CampaignLogReport r : matchedCampaigns) {
+			double reach = r.getReachImps();
+			usr = new UserPopulationProbabilities();
+			int segmentPopulation = usr.getProbability(r.getTargetSegment());
+			int campaignPeriod = ((r.getDayEnd() + 1) - r.getDayStart());
+
+			double value = (((double) n * reach) / ((double)(segmentPopulation * campaignPeriod)));
 			popularity += value;
 		}
 

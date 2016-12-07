@@ -6,18 +6,18 @@ package newagent;
 */
 import weka.core.Instances;
 import weka.classifiers.bayes.NaiveBayes;
-import weka.classifiers.functions.SMO;
+import weka.classifiers.lazy.IBk;
+import weka.core.converters.ArffSaver;
 import weka.core.converters.ConverterUtils.DataSource;
-import weka.filters.Filter;
-import weka.filters.supervised.attribute.AttributeSelection;
-import weka.attributeSelection.CfsSubsetEval;
-import weka.attributeSelection.GreedyStepwise;
+import weka.core.DenseInstance;
 import weka.core.Instance;
 
 import java.io.IOException;
-import java.io.BufferedWriter;
+import java.util.Iterator;
+
+import tau.tac.adx.report.adn.MarketSegment;
+
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 
 public class Classifier {
@@ -27,8 +27,11 @@ public class Classifier {
 	 * Classifier/Clusterer - built on the processed data
 	 * Evaluating - how good is the classifier/clusterer?
 	 * Attribute selection - removing irrelevant attributes from your data
+	 * 
+	 * implement in opportunity message class and send bit class
 	 */
 	
+	SampleAdNetworkModified adNetwork;
 	Instances impTrainingDataset;
 	Instances ucsTrainingDataset;
 	
@@ -38,151 +41,152 @@ public class Classifier {
 	FileWriter writer;
 	
 	// creating classifier object for imp
-	NaiveBayes impNB = new NaiveBayes();
+	IBk impIbk = new IBk();
 	
 	// creating classifier object for ucs
-	NaiveBayes ucsNB = new NaiveBayes();
+	IBk ucsIbk = new IBk();
 	
-	public Classifier(){
+	public Classifier(SampleAdNetworkModified adNetwork){
+		this.adNetwork = adNetwork;
+		
 		 // load data
 		try {
-			DataSource impSource = new DataSource(impFilename);
-			DataSource ucsSource = new DataSource(ucsFilename);
+			DataSource impDataSource = new DataSource(impFilename);
+			DataSource ucsDataSource = new DataSource(ucsFilename);
 			
 			// training dataset
-			impTrainingDataset = impSource.getDataSet();
-			ucsTrainingDataset = ucsSource.getDataSet();
+			impTrainingDataset = impDataSource.getDataSet();
+			ucsTrainingDataset = ucsDataSource.getDataSet();
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
-		// setting the index that store class
+		 // Make the last attribute be the class
 		if(impTrainingDataset.classIndex() == -1){
 			impTrainingDataset.setClassIndex(impTrainingDataset.numAttributes() - 1);
-		} else if(ucsTrainingDataset.classIndex() == -1){
+		}
+		
+		if(ucsTrainingDataset.classIndex() == -1){
 			ucsTrainingDataset.setClassIndex(ucsTrainingDataset.numAttributes() - 1);
 		}
 
 		try {
 			// train the classifier
-			impNB.buildClassifier(impTrainingDataset);
-			ucsNB.buildClassifier(ucsTrainingDataset);
+			impIbk.buildClassifier(impTrainingDataset);
+			ucsIbk.buildClassifier(ucsTrainingDataset);
 			
-			System.out.println(impNB.getCapabilities().toString());
-			System.out.println(ucsNB.getCapabilities().toString());
+			System.out.println(impIbk.getCapabilities().toString());
+			System.out.println(ucsIbk.getCapabilities().toString());
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 	}
 	
-	// 
-	public void addImpInstance(Instance impData){
-		/*
-		 *     String dataSetFileName = "stackoverflowQuestion.arff";
-    Instances data = MyUtilsForWekaInstanceHelper.getInstanceFromFile(dataSetFileName);
-    System.out.println("Before adding");
-    System.out.println(data);
-
-
-    double[] instanceValue1 = new double[data.numAttributes()];
-    instanceValue1[0] = 244;
-    instanceValue1[1] = 59;
-    instanceValue1[2] = 2;
-    instanceValue1[3] = 880606923;
-
-    DenseInstance denseInstance1 = new DenseInstance(1.0, instanceValue1);
-
-    data.add(denseInstance1);
-    
-    
- //assuming we already have arff loaded in a variable called dataset
-     Instance newInstance  = new Instance();
-     for(int i = 0 ; i < dataset.numAttributes() ; i++)
-     {
-
-         newInstance.setValue(i , value);
-         //i is the index of attribute
-         //value is the value that you want to set
-     }
-     //add the new instance to the main dataset at the last position
-     dataset.add(newInstance);
-     //repeat as necessary
-      * 
-      * 
- Instances dataSet = ...
- ArffSaver saver = new ArffSaver();
- saver.setInstances(dataSet);
- saver.setFile(new File("./data/test.arff"));
- saver.setDestination(new File("./data/test.arff"));   // **not** necessary in 3.5.4 and later
- saver.writeBatch();
-		 */
+	// Note - need to be called day before campaign finishes
+	public void addImpInstance(){		
+		// creating empty instance with three attribute
+		// Adv. price-index (segment popularity), segment, at day t
+		Instance data = new DenseInstance(3);
 		
-		try {
-			//true will append the new instance
-			writer = new FileWriter(impFilename,true);
+		double totalPayment = 0.00; // total payment for campaign
+		double reachedImp = 0.00; // total reach for campaign on final day
+		double pi = totalPayment / reachedImp;
+		
+		PredictImpressionCost predCost = new PredictImpressionCost(adNetwork);
+		CampaignData currCampaign = adNetwork.getCurrCampaign();
+		int dayBiddingFor = adNetwork.getDay() + 1;
+		
+		for (Iterator<MarketSegment> it = currCampaign.targetSegment.iterator(); it.hasNext();) {
+			MarketSegment marketSegment = it.next();
+			double popSt = predCost.predictAdvancePriceIndex(marketSegment, dayBiddingFor);
 			
-			//appends the string to the file
-			writer.write("244 59  2   880606923\n");
-			writer.flush();
-			writer.close();
+			data.setValue(impTrainingDataset.attribute(0), pi); // pi
+			data.setValue(impTrainingDataset.attribute(1), popSt); // segment
+			data.setValue(impTrainingDataset.attribute(2), dayBiddingFor); // campaign final day
+		}
+
+		// Set instance's dataset to be the dataset "race" 
+		data.setDataset(impTrainingDataset);; //
+		
+		// adding instance to list
+		impTrainingDataset.add(data);
+		
+		// saving to arff file
+		ArffSaver saver = new ArffSaver();
+ 		saver.setInstances(impTrainingDataset);
+ 		try {
+			saver.setFile(new File("./data/test.arff"));
+			saver.writeBatch();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 	}
 	
 	public String getImpClass(){
-		String impClass = "";
-		/*
-		 * create instance
-		 * 
-		for (int i = 0; i < impDataset.numInstances(); i++) {
-			try {
-				int pred = (int) impNB.classifyInstance(impDataset.instance(i)); // add instance here
-				System.out.print("ID: " + impDataset.instance(i).value(0));
-				System.out.print(", actual: " + impDataset.classAttribute().value((int) impDataset.instance(i).classValue()));
-				// it getst the 
-				System.out.println(", predicted: " + impDataset.classAttribute().value((int) pred));
-			} catch (Exception e) {
-				e.printStackTrace();
+		int pred = 0;
+		String impClass = "No class";
+		
+		try {
+			Instance data = impTrainingDataset.lastInstance();
+			if(data != null){
+				pred = (int) impIbk.classifyInstance(data);
+				impClass = impTrainingDataset.classAttribute().value(pred);
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		 */
+		
 		return impClass;
 	}
 	
-	public void addUcsInstance(Instances ucsDataset){
-		try {
-			//true will append the new instance
-			writer = new FileWriter(ucsFilename,true);
-			
-			//appends the string to the file
-			writer.write("244 59  2   880606923\n");
-			writer.flush();
-			writer.close();
+	// Note goes in campaign opportunity class
+	public void addUcsInstance(double ucsLevel, double ucsBid, int day){
+		// creating empty instance with three attribute
+		Instance data = new DenseInstance(3);
+		
+		// need to figure out what attribute should ucs classifier have from current won campaign using adnetwork
+		// Set instance's values for the attributes "length", "weight", and "position"
+		data.setValue(ucsTrainingDataset.attribute(0), ucsLevel); 
+		data.setValue(ucsTrainingDataset.attribute(1), ucsBid); 
+		data.setValue(ucsTrainingDataset.attribute(0), day); 
+
+		// Set instance's dataset to be the dataset "race" 
+		data.setDataset(ucsTrainingDataset);
+		
+		// adding instance to list
+		ucsTrainingDataset.add(data);
+		
+		// writing to file
+		ArffSaver saver = new ArffSaver();
+ 		saver.setInstances(ucsTrainingDataset);
+ 		try {
+			saver.setFile(new File("./data/test.arff"));
+			saver.writeBatch();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
 	public String getUcsClass(){
-		String impClass = "";
-
-		for (int i = 0; i < ucsDataset.numInstances(); i++) {
-			try {
-				int pred = (int) ucsNB.classifyInstance(ucsDataset.instance(i));
-				System.out.print("ID: " + ucsDataset.instance(i).value(0));
-				System.out.print(", actual: " + ucsDataset.classAttribute().value((int) ucsDataset.instance(i).classValue()));
-				System.out.println(", predicted: " + ucsDataset.classAttribute().value((int) pred));
-			} catch (Exception e) {
-				e.printStackTrace();
+		
+		int pred = 0;
+		String ucsClass = "No class";
+		
+		try {
+			Instance data = ucsTrainingDataset.lastInstance();
+			if(data != null){
+				pred = (int) ucsIbk.classifyInstance(data);
+				ucsClass = ucsTrainingDataset.classAttribute().value(pred);
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		 
-		return impClass;
+		
+		return ucsClass;
 	}
+	
+	
 }
