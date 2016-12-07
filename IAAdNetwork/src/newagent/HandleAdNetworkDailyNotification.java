@@ -57,6 +57,9 @@ public class HandleAdNetworkDailyNotification {
                 + " at price " + notificationMessage.getPrice()
                 + " Quality Score is: " + notificationMessage.getQualityScore());
         
+        System.out.println(" Start recording classifier data");
+        
+        /*
         // collecting and adding instances to trainning dataset
 		Classifier classify = new Classifier(adNetwork);
 		
@@ -72,6 +75,8 @@ public class HandleAdNetworkDailyNotification {
 		
 		classify.addUcsInstance(notificationMessage.getServiceLevel(), notificationMessage.getPrice(), adNetwork.getDay());
 		
+		 System.out.println(" Stop recording classifier data");
+        */
         
         /*
          * Record Log

@@ -59,6 +59,8 @@ public class Classifier {
 			impTrainingDataset = impDataSource.getDataSet();
 			ucsTrainingDataset = ucsDataSource.getDataSet();
 			
+			System.out.println(impTrainingDataset.size());
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -116,8 +118,9 @@ public class Classifier {
 		ArffSaver saver = new ArffSaver();
  		saver.setInstances(impTrainingDataset);
  		try {
-			saver.setFile(new File("./data/test.arff"));
+			saver.setFile(new File(impFilename));
 			saver.writeBatch();
+			System.out.println("Data saved to imp file");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -160,8 +163,9 @@ public class Classifier {
 		ArffSaver saver = new ArffSaver();
  		saver.setInstances(ucsTrainingDataset);
  		try {
-			saver.setFile(new File("./data/test.arff"));
+			saver.setFile(new File(ucsFilename));
 			saver.writeBatch();
+			 System.out.println("Data saved to ucs file");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

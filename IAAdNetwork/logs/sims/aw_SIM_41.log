@@ -1,0 +1,230 @@
+07/12 14:52:13 SEVERE newagent.SampleAdNetworkModified|Exception thrown while trying to parse message.{0}
+java.lang.NullPointerException
+	at newagent.Classifier.<init>(Classifier.java:67)
+	at newagent.HandleAdNetworkDailyNotification.run(HandleAdNetworkDailyNotification.java:62)
+	at newagent.SampleAdNetworkModified.handleAdNetworkDailyNotification(SampleAdNetworkModified.java:423)
+	at newagent.SampleAdNetworkModified.messageReceived(SampleAdNetworkModified.java:318)
+	at se.sics.tasim.aw.AgentService.deliverToAgent(AgentService.java:130)
+	at tau.tac.adx.agentware.AgentServiceImpl.deliverToAgent(AgentServiceImpl.java:135)
+	at tau.tac.adx.agentware.SimClient.run(SimClient.java:437)
+	at java.lang.Thread.run(Thread.java:745)
+07/12 14:52:21 SEVERE newagent.SampleAdNetworkModified|Exception thrown while trying to parse message.{0}
+java.lang.NullPointerException
+	at newagent.Classifier.<init>(Classifier.java:67)
+	at newagent.HandleAdNetworkDailyNotification.run(HandleAdNetworkDailyNotification.java:62)
+	at newagent.SampleAdNetworkModified.handleAdNetworkDailyNotification(SampleAdNetworkModified.java:423)
+	at newagent.SampleAdNetworkModified.messageReceived(SampleAdNetworkModified.java:318)
+	at se.sics.tasim.aw.AgentService.deliverToAgent(AgentService.java:130)
+	at tau.tac.adx.agentware.AgentServiceImpl.deliverToAgent(AgentServiceImpl.java:135)
+	at tau.tac.adx.agentware.SimClient.run(SimClient.java:437)
+	at java.lang.Thread.run(Thread.java:745)
+07/12 14:52:31 SEVERE newagent.SampleAdNetworkModified|Exception thrown while trying to parse message.{0}
+java.lang.NullPointerException
+	at newagent.Classifier.<init>(Classifier.java:67)
+	at newagent.HandleAdNetworkDailyNotification.run(HandleAdNetworkDailyNotification.java:62)
+	at newagent.SampleAdNetworkModified.handleAdNetworkDailyNotification(SampleAdNetworkModified.java:423)
+	at newagent.SampleAdNetworkModified.messageReceived(SampleAdNetworkModified.java:318)
+	at se.sics.tasim.aw.AgentService.deliverToAgent(AgentService.java:130)
+	at tau.tac.adx.agentware.AgentServiceImpl.deliverToAgent(AgentServiceImpl.java:135)
+	at tau.tac.adx.agentware.SimClient.run(SimClient.java:437)
+	at java.lang.Thread.run(Thread.java:745)
+07/12 14:52:40 SEVERE newagent.SampleAdNetworkModified|Exception thrown while trying to parse message.{0}
+java.lang.NullPointerException
+	at newagent.Classifier.<init>(Classifier.java:67)
+	at newagent.HandleAdNetworkDailyNotification.run(HandleAdNetworkDailyNotification.java:62)
+	at newagent.SampleAdNetworkModified.handleAdNetworkDailyNotification(SampleAdNetworkModified.java:423)
+	at newagent.SampleAdNetworkModified.messageReceived(SampleAdNetworkModified.java:318)
+	at se.sics.tasim.aw.AgentService.deliverToAgent(AgentService.java:130)
+	at tau.tac.adx.agentware.AgentServiceImpl.deliverToAgent(AgentServiceImpl.java:135)
+	at tau.tac.adx.agentware.SimClient.run(SimClient.java:437)
+	at java.lang.Thread.run(Thread.java:745)
+07/12 14:52:50 SEVERE newagent.SampleAdNetworkModified|Exception thrown while trying to parse message.{0}
+java.lang.NullPointerException
+	at newagent.Classifier.<init>(Classifier.java:67)
+	at newagent.HandleAdNetworkDailyNotification.run(HandleAdNetworkDailyNotification.java:62)
+	at newagent.SampleAdNetworkModified.handleAdNetworkDailyNotification(SampleAdNetworkModified.java:423)
+	at newagent.SampleAdNetworkModified.messageReceived(SampleAdNetworkModified.java:318)
+	at se.sics.tasim.aw.AgentService.deliverToAgent(AgentService.java:130)
+	at tau.tac.adx.agentware.AgentServiceImpl.deliverToAgent(AgentServiceImpl.java:135)
+	at tau.tac.adx.agentware.SimClient.run(SimClient.java:437)
+	at java.lang.Thread.run(Thread.java:745)
+07/12 14:53:00 SEVERE newagent.SampleAdNetworkModified|Exception thrown while trying to parse message.{0}
+java.lang.NullPointerException
+	at newagent.Classifier.<init>(Classifier.java:67)
+	at newagent.HandleAdNetworkDailyNotification.run(HandleAdNetworkDailyNotification.java:62)
+	at newagent.SampleAdNetworkModified.handleAdNetworkDailyNotification(SampleAdNetworkModified.java:423)
+	at newagent.SampleAdNetworkModified.messageReceived(SampleAdNetworkModified.java:318)
+	at se.sics.tasim.aw.AgentService.deliverToAgent(AgentService.java:130)
+	at tau.tac.adx.agentware.AgentServiceImpl.deliverToAgent(AgentServiceImpl.java:135)
+	at tau.tac.adx.agentware.SimClient.run(SimClient.java:437)
+	at java.lang.Thread.run(Thread.java:745)
+07/12 14:53:10 SEVERE newagent.SampleAdNetworkModified|Exception thrown while trying to parse message.{0}
+java.lang.NullPointerException
+	at newagent.Classifier.<init>(Classifier.java:67)
+	at newagent.HandleAdNetworkDailyNotification.run(HandleAdNetworkDailyNotification.java:62)
+	at newagent.SampleAdNetworkModified.handleAdNetworkDailyNotification(SampleAdNetworkModified.java:423)
+	at newagent.SampleAdNetworkModified.messageReceived(SampleAdNetworkModified.java:318)
+	at se.sics.tasim.aw.AgentService.deliverToAgent(AgentService.java:130)
+	at tau.tac.adx.agentware.AgentServiceImpl.deliverToAgent(AgentServiceImpl.java:135)
+	at tau.tac.adx.agentware.SimClient.run(SimClient.java:437)
+	at java.lang.Thread.run(Thread.java:745)
+07/12 14:53:21 SEVERE newagent.SampleAdNetworkModified|Exception thrown while trying to parse message.{0}
+java.lang.NullPointerException
+	at newagent.Classifier.<init>(Classifier.java:67)
+	at newagent.HandleAdNetworkDailyNotification.run(HandleAdNetworkDailyNotification.java:62)
+	at newagent.SampleAdNetworkModified.handleAdNetworkDailyNotification(SampleAdNetworkModified.java:423)
+	at newagent.SampleAdNetworkModified.messageReceived(SampleAdNetworkModified.java:318)
+	at se.sics.tasim.aw.AgentService.deliverToAgent(AgentService.java:130)
+	at tau.tac.adx.agentware.AgentServiceImpl.deliverToAgent(AgentServiceImpl.java:135)
+	at tau.tac.adx.agentware.SimClient.run(SimClient.java:437)
+	at java.lang.Thread.run(Thread.java:745)
+07/12 14:53:30 SEVERE newagent.SampleAdNetworkModified|Exception thrown while trying to parse message.{0}
+java.lang.NullPointerException
+	at newagent.Classifier.<init>(Classifier.java:67)
+	at newagent.HandleAdNetworkDailyNotification.run(HandleAdNetworkDailyNotification.java:62)
+	at newagent.SampleAdNetworkModified.handleAdNetworkDailyNotification(SampleAdNetworkModified.java:423)
+	at newagent.SampleAdNetworkModified.messageReceived(SampleAdNetworkModified.java:318)
+	at se.sics.tasim.aw.AgentService.deliverToAgent(AgentService.java:130)
+	at tau.tac.adx.agentware.AgentServiceImpl.deliverToAgent(AgentServiceImpl.java:135)
+	at tau.tac.adx.agentware.SimClient.run(SimClient.java:437)
+	at java.lang.Thread.run(Thread.java:745)
+07/12 14:53:40 SEVERE newagent.SampleAdNetworkModified|Exception thrown while trying to parse message.{0}
+java.lang.NullPointerException
+	at newagent.Classifier.<init>(Classifier.java:67)
+	at newagent.HandleAdNetworkDailyNotification.run(HandleAdNetworkDailyNotification.java:62)
+	at newagent.SampleAdNetworkModified.handleAdNetworkDailyNotification(SampleAdNetworkModified.java:423)
+	at newagent.SampleAdNetworkModified.messageReceived(SampleAdNetworkModified.java:318)
+	at se.sics.tasim.aw.AgentService.deliverToAgent(AgentService.java:130)
+	at tau.tac.adx.agentware.AgentServiceImpl.deliverToAgent(AgentServiceImpl.java:135)
+	at tau.tac.adx.agentware.SimClient.run(SimClient.java:437)
+	at java.lang.Thread.run(Thread.java:745)
+07/12 14:53:50 SEVERE newagent.SampleAdNetworkModified|Exception thrown while trying to parse message.{0}
+java.lang.NullPointerException
+	at newagent.Classifier.<init>(Classifier.java:67)
+	at newagent.HandleAdNetworkDailyNotification.run(HandleAdNetworkDailyNotification.java:62)
+	at newagent.SampleAdNetworkModified.handleAdNetworkDailyNotification(SampleAdNetworkModified.java:423)
+	at newagent.SampleAdNetworkModified.messageReceived(SampleAdNetworkModified.java:318)
+	at se.sics.tasim.aw.AgentService.deliverToAgent(AgentService.java:130)
+	at tau.tac.adx.agentware.AgentServiceImpl.deliverToAgent(AgentServiceImpl.java:135)
+	at tau.tac.adx.agentware.SimClient.run(SimClient.java:437)
+	at java.lang.Thread.run(Thread.java:745)
+07/12 14:54:01 SEVERE newagent.SampleAdNetworkModified|Exception thrown while trying to parse message.{0}
+java.lang.NullPointerException
+	at newagent.Classifier.<init>(Classifier.java:67)
+	at newagent.HandleAdNetworkDailyNotification.run(HandleAdNetworkDailyNotification.java:62)
+	at newagent.SampleAdNetworkModified.handleAdNetworkDailyNotification(SampleAdNetworkModified.java:423)
+	at newagent.SampleAdNetworkModified.messageReceived(SampleAdNetworkModified.java:318)
+	at se.sics.tasim.aw.AgentService.deliverToAgent(AgentService.java:130)
+	at tau.tac.adx.agentware.AgentServiceImpl.deliverToAgent(AgentServiceImpl.java:135)
+	at tau.tac.adx.agentware.SimClient.run(SimClient.java:437)
+	at java.lang.Thread.run(Thread.java:745)
+07/12 14:54:10 SEVERE newagent.SampleAdNetworkModified|Exception thrown while trying to parse message.{0}
+java.lang.NullPointerException
+	at newagent.Classifier.<init>(Classifier.java:67)
+	at newagent.HandleAdNetworkDailyNotification.run(HandleAdNetworkDailyNotification.java:62)
+	at newagent.SampleAdNetworkModified.handleAdNetworkDailyNotification(SampleAdNetworkModified.java:423)
+	at newagent.SampleAdNetworkModified.messageReceived(SampleAdNetworkModified.java:318)
+	at se.sics.tasim.aw.AgentService.deliverToAgent(AgentService.java:130)
+	at tau.tac.adx.agentware.AgentServiceImpl.deliverToAgent(AgentServiceImpl.java:135)
+	at tau.tac.adx.agentware.SimClient.run(SimClient.java:437)
+	at java.lang.Thread.run(Thread.java:745)
+07/12 14:54:20 SEVERE newagent.SampleAdNetworkModified|Exception thrown while trying to parse message.{0}
+java.lang.NullPointerException
+	at newagent.Classifier.<init>(Classifier.java:67)
+	at newagent.HandleAdNetworkDailyNotification.run(HandleAdNetworkDailyNotification.java:62)
+	at newagent.SampleAdNetworkModified.handleAdNetworkDailyNotification(SampleAdNetworkModified.java:423)
+	at newagent.SampleAdNetworkModified.messageReceived(SampleAdNetworkModified.java:318)
+	at se.sics.tasim.aw.AgentService.deliverToAgent(AgentService.java:130)
+	at tau.tac.adx.agentware.AgentServiceImpl.deliverToAgent(AgentServiceImpl.java:135)
+	at tau.tac.adx.agentware.SimClient.run(SimClient.java:437)
+	at java.lang.Thread.run(Thread.java:745)
+07/12 14:54:31 SEVERE newagent.SampleAdNetworkModified|Exception thrown while trying to parse message.{0}
+java.lang.NullPointerException
+	at newagent.Classifier.<init>(Classifier.java:67)
+	at newagent.HandleAdNetworkDailyNotification.run(HandleAdNetworkDailyNotification.java:62)
+	at newagent.SampleAdNetworkModified.handleAdNetworkDailyNotification(SampleAdNetworkModified.java:423)
+	at newagent.SampleAdNetworkModified.messageReceived(SampleAdNetworkModified.java:318)
+	at se.sics.tasim.aw.AgentService.deliverToAgent(AgentService.java:130)
+	at tau.tac.adx.agentware.AgentServiceImpl.deliverToAgent(AgentServiceImpl.java:135)
+	at tau.tac.adx.agentware.SimClient.run(SimClient.java:437)
+	at java.lang.Thread.run(Thread.java:745)
+07/12 14:54:40 SEVERE newagent.SampleAdNetworkModified|Exception thrown while trying to parse message.{0}
+java.lang.NullPointerException
+	at newagent.Classifier.<init>(Classifier.java:67)
+	at newagent.HandleAdNetworkDailyNotification.run(HandleAdNetworkDailyNotification.java:62)
+	at newagent.SampleAdNetworkModified.handleAdNetworkDailyNotification(SampleAdNetworkModified.java:423)
+	at newagent.SampleAdNetworkModified.messageReceived(SampleAdNetworkModified.java:318)
+	at se.sics.tasim.aw.AgentService.deliverToAgent(AgentService.java:130)
+	at tau.tac.adx.agentware.AgentServiceImpl.deliverToAgent(AgentServiceImpl.java:135)
+	at tau.tac.adx.agentware.SimClient.run(SimClient.java:437)
+	at java.lang.Thread.run(Thread.java:745)
+07/12 14:54:50 SEVERE newagent.SampleAdNetworkModified|Exception thrown while trying to parse message.{0}
+java.lang.NullPointerException
+	at newagent.Classifier.<init>(Classifier.java:67)
+	at newagent.HandleAdNetworkDailyNotification.run(HandleAdNetworkDailyNotification.java:62)
+	at newagent.SampleAdNetworkModified.handleAdNetworkDailyNotification(SampleAdNetworkModified.java:423)
+	at newagent.SampleAdNetworkModified.messageReceived(SampleAdNetworkModified.java:318)
+	at se.sics.tasim.aw.AgentService.deliverToAgent(AgentService.java:130)
+	at tau.tac.adx.agentware.AgentServiceImpl.deliverToAgent(AgentServiceImpl.java:135)
+	at tau.tac.adx.agentware.SimClient.run(SimClient.java:437)
+	at java.lang.Thread.run(Thread.java:745)
+07/12 14:55:00 SEVERE newagent.SampleAdNetworkModified|Exception thrown while trying to parse message.{0}
+java.lang.NullPointerException
+	at newagent.Classifier.<init>(Classifier.java:67)
+	at newagent.HandleAdNetworkDailyNotification.run(HandleAdNetworkDailyNotification.java:62)
+	at newagent.SampleAdNetworkModified.handleAdNetworkDailyNotification(SampleAdNetworkModified.java:423)
+	at newagent.SampleAdNetworkModified.messageReceived(SampleAdNetworkModified.java:318)
+	at se.sics.tasim.aw.AgentService.deliverToAgent(AgentService.java:130)
+	at tau.tac.adx.agentware.AgentServiceImpl.deliverToAgent(AgentServiceImpl.java:135)
+	at tau.tac.adx.agentware.SimClient.run(SimClient.java:437)
+	at java.lang.Thread.run(Thread.java:745)
+07/12 14:55:10 SEVERE newagent.SampleAdNetworkModified|Exception thrown while trying to parse message.{0}
+java.lang.NullPointerException
+	at newagent.Classifier.<init>(Classifier.java:67)
+	at newagent.HandleAdNetworkDailyNotification.run(HandleAdNetworkDailyNotification.java:62)
+	at newagent.SampleAdNetworkModified.handleAdNetworkDailyNotification(SampleAdNetworkModified.java:423)
+	at newagent.SampleAdNetworkModified.messageReceived(SampleAdNetworkModified.java:318)
+	at se.sics.tasim.aw.AgentService.deliverToAgent(AgentService.java:130)
+	at tau.tac.adx.agentware.AgentServiceImpl.deliverToAgent(AgentServiceImpl.java:135)
+	at tau.tac.adx.agentware.SimClient.run(SimClient.java:437)
+	at java.lang.Thread.run(Thread.java:745)
+07/12 14:55:20 SEVERE newagent.SampleAdNetworkModified|Exception thrown while trying to parse message.{0}
+java.lang.NullPointerException
+	at newagent.Classifier.<init>(Classifier.java:67)
+	at newagent.HandleAdNetworkDailyNotification.run(HandleAdNetworkDailyNotification.java:62)
+	at newagent.SampleAdNetworkModified.handleAdNetworkDailyNotification(SampleAdNetworkModified.java:423)
+	at newagent.SampleAdNetworkModified.messageReceived(SampleAdNetworkModified.java:318)
+	at se.sics.tasim.aw.AgentService.deliverToAgent(AgentService.java:130)
+	at tau.tac.adx.agentware.AgentServiceImpl.deliverToAgent(AgentServiceImpl.java:135)
+	at tau.tac.adx.agentware.SimClient.run(SimClient.java:437)
+	at java.lang.Thread.run(Thread.java:745)
+07/12 14:55:30 SEVERE newagent.SampleAdNetworkModified|Exception thrown while trying to parse message.{0}
+java.lang.NullPointerException
+	at newagent.Classifier.<init>(Classifier.java:67)
+	at newagent.HandleAdNetworkDailyNotification.run(HandleAdNetworkDailyNotification.java:62)
+	at newagent.SampleAdNetworkModified.handleAdNetworkDailyNotification(SampleAdNetworkModified.java:423)
+	at newagent.SampleAdNetworkModified.messageReceived(SampleAdNetworkModified.java:318)
+	at se.sics.tasim.aw.AgentService.deliverToAgent(AgentService.java:130)
+	at tau.tac.adx.agentware.AgentServiceImpl.deliverToAgent(AgentServiceImpl.java:135)
+	at tau.tac.adx.agentware.SimClient.run(SimClient.java:437)
+	at java.lang.Thread.run(Thread.java:745)
+07/12 14:55:40 SEVERE newagent.SampleAdNetworkModified|Exception thrown while trying to parse message.{0}
+java.lang.NullPointerException
+	at newagent.Classifier.<init>(Classifier.java:67)
+	at newagent.HandleAdNetworkDailyNotification.run(HandleAdNetworkDailyNotification.java:62)
+	at newagent.SampleAdNetworkModified.handleAdNetworkDailyNotification(SampleAdNetworkModified.java:423)
+	at newagent.SampleAdNetworkModified.messageReceived(SampleAdNetworkModified.java:318)
+	at se.sics.tasim.aw.AgentService.deliverToAgent(AgentService.java:130)
+	at tau.tac.adx.agentware.AgentServiceImpl.deliverToAgent(AgentServiceImpl.java:135)
+	at tau.tac.adx.agentware.SimClient.run(SimClient.java:437)
+	at java.lang.Thread.run(Thread.java:745)
+07/12 14:55:50 SEVERE newagent.SampleAdNetworkModified|Exception thrown while trying to parse message.{0}
+java.lang.NullPointerException
+	at newagent.Classifier.<init>(Classifier.java:67)
+	at newagent.HandleAdNetworkDailyNotification.run(HandleAdNetworkDailyNotification.java:62)
+	at newagent.SampleAdNetworkModified.handleAdNetworkDailyNotification(SampleAdNetworkModified.java:423)
+	at newagent.SampleAdNetworkModified.messageReceived(SampleAdNetworkModified.java:318)
+	at se.sics.tasim.aw.AgentService.deliverToAgent(AgentService.java:130)
+	at tau.tac.adx.agentware.AgentServiceImpl.deliverToAgent(AgentServiceImpl.java:135)
+	at tau.tac.adx.agentware.SimClient.run(SimClient.java:437)
+	at java.lang.Thread.run(Thread.java:745)

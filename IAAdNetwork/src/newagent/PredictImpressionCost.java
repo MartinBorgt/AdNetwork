@@ -12,9 +12,6 @@ public class PredictImpressionCost {
 	
 	SampleAdNetworkModified adNetwork;
 	
-	List<CampaignLogReport> totalCampaigns;
-	List<CampaignLogReport> matchedCampaigns;
-	
 	// keeping our completion rate high
 	double max = 1.2;
 	double min = 0.8;
@@ -44,6 +41,9 @@ public class PredictImpressionCost {
 	 * return segment bid value
 	 */
 	public double predictOneDayPriceIndex(MarketSegment segment, int currentDay) {
+		
+		List<CampaignLogReport> totalCampaigns = new ArrayList<>();
+		List<CampaignLogReport> matchedCampaigns = new ArrayList<>();
 		
 		totalCampaigns.addAll(adNetwork.getLostCampaigns());
 		totalCampaigns.addAll(adNetwork.getWinCampaigns());
@@ -76,6 +76,9 @@ public class PredictImpressionCost {
 	
 	// price index based on random completion rate
 	public double predictAdvancePriceIndex(MarketSegment segment, int currentDay) {
+		
+		List<CampaignLogReport> totalCampaigns = new ArrayList<>();
+		List<CampaignLogReport> matchedCampaigns = new ArrayList<>();
 		
 		totalCampaigns.addAll(adNetwork.getLostCampaigns());
 		totalCampaigns.addAll(adNetwork.getWinCampaigns());
