@@ -23,7 +23,7 @@ public class SendTheBidsAndAds {
 	public SendTheBidsAndAds() {
 	}
 
-	public void Run(SampleAdNetworkModified adNetwork) {
+	public void Run(SampleAdNetworkModified adNetwork, Classifier classify ) {
 		adNetwork.setBidBundle(null);
 
 		try {
@@ -309,6 +309,9 @@ public class SendTheBidsAndAds {
 							MarketSegment marketSegment = it2.next();
 							popSt += predictImpressionCost.predictOneDayPriceIndex(marketSegment, dayBiddingFor);
 						}
+						
+						// use this bidvalue later when u have collected enough data
+						//double bidval = classify.getImpClass();
 						
 						System.out.println("popularity before: " + popSt);
 

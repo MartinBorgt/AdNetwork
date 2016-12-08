@@ -114,6 +114,10 @@ public class SampleAdNetworkModified extends Agent {
      * Winning Campaign(s)
      */
     private List<CampaignLogReport> winCampaigns = new ArrayList<CampaignLogReport>();
+    
+    // classifier
+    
+    Classifier classify = new Classifier(this);
 
     /*
      * Losing Campaign(s)
@@ -421,7 +425,7 @@ public class SampleAdNetworkModified extends Agent {
      */
     private void handleAdNetworkDailyNotification(AdNetworkDailyNotification notificationMessage) {
     	
-        new HandleAdNetworkDailyNotification().run(this, notificationMessage, new Classifier(this));
+        new HandleAdNetworkDailyNotification().run(this, notificationMessage, classify);
     }
 
     /**
@@ -437,7 +441,7 @@ public class SampleAdNetworkModified extends Agent {
      *
      */
     protected void sendBidAndAds(SampleAdNetworkModified adNetwork) {
-        new SendTheBidsAndAds().Run(adNetwork);
+        new SendTheBidsAndAds().Run(adNetwork, classify);
     }
 
     /**
