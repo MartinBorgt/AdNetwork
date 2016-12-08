@@ -17,7 +17,7 @@ public class HandleAdNetworkDailyNotification {
     public HandleAdNetworkDailyNotification() {
     }
 
-    public void run(SampleAdNetworkModified adNetwork, AdNetworkDailyNotification notificationMessage) {
+    public void run(SampleAdNetworkModified adNetwork, AdNetworkDailyNotification notificationMessage, Classifier classify) {
 
         adNetwork.setAdNetworkDailyNotification(notificationMessage);
 
@@ -37,7 +37,7 @@ public class HandleAdNetworkDailyNotification {
             adNetwork.setCurrCampaign(adNetwork.getPendingCampaign());
             adNetwork.genCampaignQueries(adNetwork.getCurrCampaign());
             adNetwork.getMyCampaigns().put(adNetwork.getPendingCampaign().id, adNetwork.getPendingCampaign());
-
+            
             campaignAllocatedTo = " WON at cost (Millis)"
                     + notificationMessage.getCostMillis();
             
@@ -58,25 +58,45 @@ public class HandleAdNetworkDailyNotification {
                 + " Quality Score is: " + notificationMessage.getQualityScore());
         
         System.out.println(" Start recording classifier data");
-        
-        /*
-        // collecting and adding instances to trainning dataset
-		Classifier classify = new Classifier(adNetwork);
 		
 		for (Iterator<CampaignLogReport> it = adNetwork.getWinCampaigns().iterator(); it.hasNext();) {
 			CampaignLogReport winningCampaign = it.next();
 			double currDay = adNetwork.getDay();
-			double imptogo = Math.max(0, winningCampaign.getReachImps() - winningCampaign.getTargetedImps());
 			
 			if(winningCampaign.getDayEnd() == currDay){
-				classify.addImpInstance(winningCampaign.getPrice(), imptogo );
+				double reachedImp = winningCampaign.getTargetedImps();
+				
+				double startBankStatus = 0.00;
+				double endDayBankStatus = 0.00;
+				
+				for (Iterator<CampaignLogReport> it2 = adNetwork.getLogReports().iterator(); it2.hasNext();) {
+					CampaignLogReport logCampaign = it2.next();
+					if(winningCampaign.getDayStart() == logCampaign.getDay()){
+						startBankStatus = logCampaign.getBankStatus();
+					}
+					
+					if(winningCampaign.getDayEnd() == logCampaign.getDayEnd()){
+						endDayBankStatus = logCampaign.getBankStatus();
+					}
+				}
+				
+				double totalPayment = endDayBankStatus - startBankStatus;
+				
+				System.out.println("rached imp " + reachedImp );
+				System.out.println("total Payment "  + totalPayment);
+				
+				classify.addImpInstance(totalPayment, reachedImp);
 			}
 		}
 		
-		classify.addUcsInstance(notificationMessage.getServiceLevel(), notificationMessage.getPrice(), adNetwork.getDay());
+		System.out.println(" Stop recording classifier data");
+        
+        System.out.println(" Start recording classifier data");
+		
+		classify.addUcsInstance(notificationMessage.getServiceLevel(), notificationMessage.getPrice(), adNetwork.getDay() + 1);
 		
 		 System.out.println(" Stop recording classifier data");
-        */
+        
         
         /*
          * Record Log

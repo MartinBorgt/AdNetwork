@@ -1,5 +1,9 @@
-@RELATION imp
-@ATTRIBUTE segmentpop NUMERIC
-@ATTRIBUTE biddingday NUMERIC
-@ATTRIBUTE pi NUMERIC
-@DATA
+@relation imp
+
+@attribute segmentpop numeric
+@attribute biddingday numeric
+@attribute pi numeric
+
+@data
+1.265679,2,0.005
+1.724015,6,0.000014

@@ -1,6 +1,20 @@
-@RELATION ucs
-@ATTRIBUTE ucslevel NUMERIC
-@ATTRIBUTE biddingday NUMERIC
-@ATTRIBUTE ucsbid NUMERIC
-@ATTRIBUTE class {too_high, high, low, too_low}
-@DATA
+@relation ucs
+
+@attribute ucslevel numeric
+@attribute biddingday numeric
+@attribute ucsbid numeric
+@attribute class {too_low,low,good,high,too_high}
+
+@data
+1,5,0.05,?
+1,0,0.196373,?
+0.81,1,0.130758,?
+0.59049,2,0.063244,?
+0.478297,3,0,?
+0.478297,4,0,?
+0.478297,5,0,?
+0.478297,6,0,?
+0.478297,7,0,?
+0.478297,8,0,?
+0.478297,9,0,?
+0.478297,10,0,?

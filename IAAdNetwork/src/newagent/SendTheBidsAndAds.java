@@ -177,7 +177,6 @@ public class SendTheBidsAndAds {
 					MarketSegment marketSegment = it.next();
 					popSt += predictImpressionCost.predictOneDayPriceIndex(marketSegment, dayBiddingFor);
 				}
-				System.out.println("popularity before: " + popSt);
 
 				// Hari: check the lines below against eachother
 				// budgetAvailable = popSt * 0.9;
@@ -185,8 +184,6 @@ public class SendTheBidsAndAds {
 					budgetAvailable = popSt * 0.9;
 
 				popSt = popSt / UserPopulationProbabilities.getProbability(currentCampaign.getTargetSegment());
-				System.out.println("popularity after: " + popSt + " divided by: "
-						+ UserPopulationProbabilities.getProbability(currentCampaign.getTargetSegment()));
 
 				double valueOfBid = popSt;
 				boolean reachSmall = false;

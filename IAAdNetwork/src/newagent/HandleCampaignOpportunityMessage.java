@@ -160,23 +160,26 @@ public class HandleCampaignOpportunityMessage {
         /*
          * Adjust ucs bid s.t. target level is achieved. Note: The bid for the
          * user classification service is piggybacked
-         * 
-         * classifier should be impemented here to check for predicted ucs value
          */
         PredictUCSCost ucs = new PredictUCSCost(adNetwork);
+        Random  rand = new Random();
+        
+        double ucsBid = 0.1 + random.nextDouble()/10.0;
         
         if (adNetwork.getAdNetworkDailyNotification() != null) {
             double ucsLevel = adNetwork.getAdNetworkDailyNotification().getServiceLevel();
             double ucsTargetBid = adNetwork.getAdNetworkDailyNotification().getPrice();
             
-            double ucsCost = ucs.predictUCSCost(ucsLevel, ucsTargetBid);
-            adNetwork.setUcsBid(ucsCost);
-            System.out.println("UCS Cost " + ucsCost);
+            ucsBid = ucs.predictUCSCost(ucsLevel, ucsTargetBid);
+            
+            System.out.println(" >>>>>>> Test UCS cost " + ucsBid);
+            
+            adNetwork.setUcsBid(ucsBid);
             
             //adNetwork.setUcsBid(0.1 + random.nextDouble() / 10.0);
             System.out.println("Day " + adNetwork.getDay() + ": ucs level reported: " + ucsLevel);
         } else {
-            System.out.println("Day " + adNetwork.getDay() + ": Initial ucs bid is " + adNetwork.getUcsBid());
+            System.out.println("Day " + adNetwork.getDay() + ": Initial ucs bid is " + ucsBid);
         }
 
         /*
@@ -207,10 +210,6 @@ public class HandleCampaignOpportunityMessage {
         /*
          * Note: Campaign bid is in millis
          */
-//        PredictUCSCost ucsCost = new PredictUCSCost(adNetwork);
-//        System.out.println("UCS Cost Prediction: " + ucsCost.predictUCSCost());
-//        AdNetBidMessage bids = new AdNetBidMessage(ucsCost.predictUCSCost(), adNetwork.getPendingCampaign().id, cmpBidMillis);
-//        adNetwork.sendResponse(adNetwork.getDemandAgentAddress(), bids);
         
         AdNetBidMessage bids = new AdNetBidMessage(adNetwork.getUcsBid(), adNetwork.getPendingCampaign().id, cmpBidMillis);
         adNetwork.sendResponse(adNetwork.getDemandAgentAddress(), bids);

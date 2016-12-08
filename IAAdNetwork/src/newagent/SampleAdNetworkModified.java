@@ -420,7 +420,8 @@ public class SampleAdNetworkModified extends Agent {
      * classification service level is applicable starting from day n+1.
      */
     private void handleAdNetworkDailyNotification(AdNetworkDailyNotification notificationMessage) {
-        new HandleAdNetworkDailyNotification().run(this, notificationMessage);
+    	
+        new HandleAdNetworkDailyNotification().run(this, notificationMessage, new Classifier(this));
     }
 
     /**

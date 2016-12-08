@@ -44,11 +44,10 @@ public class PredictUCSCost {
 			
 			if(campRange.contains(UCSBidDay)){
 				int reach = (int) (cr.getReachImps() / period);
-				System.out.println("Reach UCS test 2 " + reach);
 				dailyReach += reach;
-				System.out.println("Daily Reach UCS test 3 " + dailyReach);
 			}
 		}
+		System.out.println("Daily Reach UCS " + dailyReach);
 		
 		double previousLevel = ucsLevel;
 		double previousUcsBid = ucsBid;
@@ -72,6 +71,7 @@ public class PredictUCSCost {
 		if(previousLevel > 0.9){
 			return previousUcsBid / (1 + GUCS);
 		} else if(previousLevel < 0.8  && roDivideBid >= secondCondition){
+			System.out.println("<<<<<<<<<<<<<<<< IT IS IN");
 			return (1 + GUCS) * previousUcsBid;
 		} else {
 			return previousUcsBid;

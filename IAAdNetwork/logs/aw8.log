@@ -1,4 +1,10 @@
-07/12 14:27:54 SEVERE agentware.SimClient|************************************************************
-07/12 14:27:54 SEVERE agentware.SimClient|* Authentication Failed
-07/12 14:27:54 SEVERE agentware.SimClient|* could not login as donaldtrump: Password incorrect
-07/12 14:27:54 SEVERE agentware.SimClient|************************************************************
+07/12 23:55:13 INFO agentware.SimClient|next simulation 46 has already started
+07/12 23:55:18 SEVERE agentware.ServerConnection|(1) could not read
+java.io.EOFException
+	at java.io.DataInputStream.readInt(DataInputStream.java:392)
+	at tau.tac.adx.agentware.ServerConnection.run(ServerConnection.java:221)
+	at java.lang.Thread.run(Thread.java:745)
+07/12 23:55:18 SEVERE agentware.SimClient|************************************************************
+07/12 23:55:18 SEVERE agentware.SimClient|* Connection Lost
+07/12 23:55:18 SEVERE agentware.SimClient|* Lost connection to localhost (will reconnect in 30 seconds)
+07/12 23:55:18 SEVERE agentware.SimClient|************************************************************

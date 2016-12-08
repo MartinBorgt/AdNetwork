@@ -5,7 +5,6 @@ package newagent;
 * weka library
 */
 import weka.core.Instances;
-import weka.classifiers.bayes.NaiveBayes;
 import weka.classifiers.functions.LinearRegression;
 import weka.classifiers.lazy.IBk;
 import weka.core.converters.ArffSaver;
@@ -15,6 +14,7 @@ import weka.core.Instance;
 
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.Random;
 
 import tau.tac.adx.report.adn.MarketSegment;
 
@@ -36,8 +36,8 @@ public class Classifier {
 	Instances impTrainingDataset;
 	Instances ucsTrainingDataset;
 	
-	String impFilename = "../../data/impdataset.arff";
-	String ucsFilename = "../../data/ucsdataset.arff";
+	String impFilename = "/Users/Premlimbu/Desktop/git/AdNetwork/IAAdNetwork/data/impdataset.arff";
+	String ucsFilename = "/Users/Premlimbu/Desktop/git/AdNetwork/IAAdNetwork/data/ucsdataset.arff";
 	
 	FileWriter writer;
 	
@@ -58,9 +58,6 @@ public class Classifier {
 			// training dataset
 			impTrainingDataset = impDataSource.getDataSet();
 			ucsTrainingDataset = ucsDataSource.getDataSet();
-			
-			System.out.println(impTrainingDataset.size());
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -73,11 +70,25 @@ public class Classifier {
 		if(ucsTrainingDataset.classIndex() == -1){
 			ucsTrainingDataset.setClassIndex(ucsTrainingDataset.numAttributes() - 1);
 		}
-
+		
 		try {
+			
 			// train the classifier
-			impLR.buildClassifier(impTrainingDataset);
-			ucsIbk.buildClassifier(ucsTrainingDataset);
+			if(ucsTrainingDataset.size()  < 1 && impTrainingDataset.size() < 1){
+				double totalPay = 5.00;
+				double reachedImpression = 1000.00;
+				int day = 5;
+				double ucsBid = 0.05;
+				double ucsLevel = 1;
+				String bidClass = "good";
+				
+				this.addImpInstance(totalPay, reachedImpression);
+				//this.addUcsInstance(ucsLevel, ucsBid, day, bidClass);
+				this.addUcsInstance(ucsLevel, ucsBid, day);
+				
+				ucsIbk.buildClassifier(ucsTrainingDataset);
+				impLR.buildClassifier(impTrainingDataset);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -97,6 +108,7 @@ public class Classifier {
 		
 		PredictImpressionCost predCost = new PredictImpressionCost(adNetwork);
 		CampaignData currCampaign = adNetwork.getCurrCampaign();
+		
 		int dayBiddingFor = adNetwork.getDay() + 1;
 		
 		for (Iterator<MarketSegment> it = currCampaign.targetSegment.iterator(); it.hasNext();) {
@@ -107,9 +119,20 @@ public class Classifier {
 			data.setValue(impTrainingDataset.attribute(1), dayBiddingFor); // campaign final day
 			data.setValue(impTrainingDataset.attribute(2), pi); // pi
 		}
-
+		
+		/*
+		Random rand = new Random();
+		double popSt = rand.nextDouble();
+		int dayBiddingFor = rand.nextInt();
+		
+		data.setValue(impTrainingDataset.attribute(0), popSt); // segment
+		data.setValue(impTrainingDataset.attribute(1), dayBiddingFor); // campaign final day
+		data.setValue(impTrainingDataset.attribute(2), pi); // pi
+		*/
+		
 		// Set instance's dataset to be the dataset "race" 
 		data.setDataset(impTrainingDataset);; //
+		
 		
 		// adding instance to list
 		impTrainingDataset.add(data);
@@ -145,19 +168,54 @@ public class Classifier {
 	// Note goes in campaign opportunity class
 	public void addUcsInstance(double ucsLevel, double ucsBid, int day){
 		// creating empty instance with three attribute
-		Instance data = new DenseInstance(3);
+		Instance data = new DenseInstance(4);
 		
 		// need to figure out what attribute should ucs classifier have from current won campaign using adnetwork
 		// Set instance's values for the attributes "length", "weight", and "position"
 		data.setValue(ucsTrainingDataset.attribute(0), ucsLevel);  
 		data.setValue(ucsTrainingDataset.attribute(1), day);
 		data.setValue(ucsTrainingDataset.attribute(2), ucsBid);
-
+		
 		// Set instance's dataset to be the dataset "race" 
 		data.setDataset(ucsTrainingDataset);
 		
 		// adding instance to list
 		ucsTrainingDataset.add(data);
+		
+		// writing to file
+		ArffSaver saver = new ArffSaver();
+ 		saver.setInstances(ucsTrainingDataset);
+ 		try {
+			saver.setFile(new File(ucsFilename));
+			saver.writeBatch();
+			 System.out.println("Data saved to ucs file");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	// Note goes in campaign opportunity class
+	public void addUcsInstance(Instance data, String bidClass){
+		
+		String className = bidClass;
+		
+		switch(className) {
+			case "too_low":
+				data.setValue(ucsTrainingDataset.attribute(3), 0);
+				break;
+			case "low":
+				data.setValue(ucsTrainingDataset.attribute(3), 1);
+				break;
+			case "good":
+				data.setValue(ucsTrainingDataset.attribute(3), 2);
+				break;
+			case "high":
+				data.setValue(ucsTrainingDataset.attribute(3), 3);
+				break;
+			default:
+				data.setValue(ucsTrainingDataset.attribute(3), 4);
+				break;
+		}
 		
 		// writing to file
 		ArffSaver saver = new ArffSaver();
@@ -181,6 +239,7 @@ public class Classifier {
 			if(data != null){
 				pred = (int) ucsIbk.classifyInstance(data);
 				ucsClass = ucsTrainingDataset.classAttribute().value(pred);
+				this.addUcsInstance(data, ucsClass);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -188,6 +247,26 @@ public class Classifier {
 		
 		return ucsClass;
 	}
-	
-	
+
+	/*
+	public static void main(String [] args){
+		Classifier classify = new Classifier();
+		
+		Random rand = new Random();
+		
+		double totalPay = rand.nextDouble();
+		double reachedImpression = rand.nextDouble();
+		
+		double ucsLevel = rand.nextDouble();
+		double ucsBid = rand.nextDouble();
+		int day = rand.nextInt();
+		String c = "too_low";
+		
+		for(int i = 0; i <= 5; i++){
+			classify.addImpInstance(totalPay, reachedImpression);
+			//classify.addUcsInstance(ucsLevel, ucsBid, day , c);
+			classify.addUcsInstance(ucsLevel, ucsBid, day);
+		}
+	}
+	*/
 }
