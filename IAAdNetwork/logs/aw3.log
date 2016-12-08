@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 08/12 02:37:21 INFO agentware.SimClient|next simulation starts in 38 seconds
 08/12 03:46:55 INFO agentware.SimClient|next simulation 52 has already started
 08/12 03:46:57 SEVERE agentware.SimClient|No agent registered to receive Message[coordinator,adv1,(CampaignReport)]
@@ -8529,3 +8530,26 @@ java.net.ConnectException: Connection refused
 08/12 15:21:28 SEVERE agentware.SimClient|* Connection Failed
 08/12 15:21:28 SEVERE agentware.SimClient|* Could not connect to localhost (will retry in 30 seconds)
 08/12 15:21:28 SEVERE agentware.SimClient|************************************************************
+=======
+08/12 15:16:07 SEVERE agentware.ServerConnection|(1) connection to server failed
+java.net.ConnectException: Connection refused: connect
+	at java.net.DualStackPlainSocketImpl.connect0(Native Method)
+	at java.net.DualStackPlainSocketImpl.socketConnect(Unknown Source)
+	at java.net.AbstractPlainSocketImpl.doConnect(Unknown Source)
+	at java.net.AbstractPlainSocketImpl.connectToAddress(Unknown Source)
+	at java.net.AbstractPlainSocketImpl.connect(Unknown Source)
+	at java.net.PlainSocketImpl.connect(Unknown Source)
+	at java.net.SocksSocketImpl.connect(Unknown Source)
+	at java.net.Socket.connect(Unknown Source)
+	at java.net.Socket.connect(Unknown Source)
+	at java.net.Socket.<init>(Unknown Source)
+	at java.net.Socket.<init>(Unknown Source)
+	at tau.tac.adx.agentware.ServerConnection.connect(ServerConnection.java:136)
+	at tau.tac.adx.agentware.ServerConnection.run(ServerConnection.java:199)
+	at java.lang.Thread.run(Unknown Source)
+08/12 15:16:07 SEVERE agentware.SimClient|************************************************************
+08/12 15:16:07 SEVERE agentware.SimClient|* Connection Failed
+08/12 15:16:07 SEVERE agentware.SimClient|* Could not connect to localhost (will retry in 30 seconds)
+08/12 15:16:07 SEVERE agentware.SimClient|************************************************************
+08/12 15:16:37 INFO agentware.SimClient|next simulation starts in 22 seconds
+>>>>>>> 83f247053c5dd9fba65c9a8b90c20a27cca1e7f9

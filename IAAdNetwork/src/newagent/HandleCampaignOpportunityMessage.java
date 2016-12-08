@@ -132,7 +132,7 @@ public class HandleCampaignOpportunityMessage {
             System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
             System.out.println("@ WARNING duration days conflict with our winning campaign!@");
             System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-            multiplier *= 1;
+            multiplier *= 1.5;
         }
         if(isDaysConflictWithOtherCampaign){
             System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
@@ -153,7 +153,7 @@ public class HandleCampaignOpportunityMessage {
          */
         long cmpBidMillis = random.nextInt((int) cmpimps);
         //cmpBidMillis = (long) (new PredictCampaignCost(adNetwork).predictMultidayPriceIndex(adNetwork) * 1000)*multiplier;
-        cmpBidMillis = (long) (new PredictCampaignCost(adNetwork).predictMultidayPriceIndex(adNetwork) * 1000);
+        cmpBidMillis = (long) (new PredictCampaignCost(adNetwork).predictMultidayPriceIndex(adNetwork) * 1000)*multiplier;
       
         System.out.println("Day " + adNetwork.getDay() + ": Campaign total budget bid (millis): " + cmpBidMillis);
 

@@ -1,2 +1,26 @@
+<<<<<<< HEAD
 07/12 23:55:27 INFO agentware.SimClient|next simulation starts in 32 seconds
 08/12 00:06:00 INFO agentware.SimClient|next simulation starts in 59 seconds
+=======
+08/12 14:57:38 SEVERE agentware.ServerConnection|(1) connection to server failed
+java.net.ConnectException: Connection refused: connect
+	at java.net.DualStackPlainSocketImpl.connect0(Native Method)
+	at java.net.DualStackPlainSocketImpl.socketConnect(Unknown Source)
+	at java.net.AbstractPlainSocketImpl.doConnect(Unknown Source)
+	at java.net.AbstractPlainSocketImpl.connectToAddress(Unknown Source)
+	at java.net.AbstractPlainSocketImpl.connect(Unknown Source)
+	at java.net.PlainSocketImpl.connect(Unknown Source)
+	at java.net.SocksSocketImpl.connect(Unknown Source)
+	at java.net.Socket.connect(Unknown Source)
+	at java.net.Socket.connect(Unknown Source)
+	at java.net.Socket.<init>(Unknown Source)
+	at java.net.Socket.<init>(Unknown Source)
+	at tau.tac.adx.agentware.ServerConnection.connect(ServerConnection.java:136)
+	at tau.tac.adx.agentware.ServerConnection.run(ServerConnection.java:199)
+	at java.lang.Thread.run(Unknown Source)
+08/12 14:57:38 SEVERE agentware.SimClient|************************************************************
+08/12 14:57:38 SEVERE agentware.SimClient|* Connection Failed
+08/12 14:57:38 SEVERE agentware.SimClient|* Could not connect to localhost (will retry in 30 seconds)
+08/12 14:57:38 SEVERE agentware.SimClient|************************************************************
+08/12 14:58:08 INFO agentware.SimClient|next simulation starts in 51 seconds
+>>>>>>> 83f247053c5dd9fba65c9a8b90c20a27cca1e7f9

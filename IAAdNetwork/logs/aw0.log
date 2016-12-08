@@ -1,1 +1,18 @@
+<<<<<<< HEAD
 08/12 15:59:41 INFO agentware.SimClient|next simulation starts in 18 seconds
+=======
+08/12 15:24:13 INFO agentware.SimClient|next simulation 111 has already started
+08/12 15:24:16 SEVERE agentware.ServerConnection|(1) could not read
+java.net.SocketException: Connection reset
+	at java.net.SocketInputStream.read(Unknown Source)
+	at java.net.SocketInputStream.read(Unknown Source)
+	at java.net.SocketInputStream.read(Unknown Source)
+	at java.io.DataInputStream.readInt(Unknown Source)
+	at tau.tac.adx.agentware.ServerConnection.run(ServerConnection.java:221)
+	at java.lang.Thread.run(Unknown Source)
+08/12 15:24:16 SEVERE agentware.SimClient|************************************************************
+08/12 15:24:16 SEVERE agentware.SimClient|* Connection Lost
+08/12 15:24:16 SEVERE agentware.SimClient|* Lost connection to localhost (will reconnect in 30 seconds)
+08/12 15:24:16 SEVERE agentware.SimClient|************************************************************
+08/12 15:24:46 INFO agentware.SimClient|next simulation starts in 13 seconds
+>>>>>>> 83f247053c5dd9fba65c9a8b90c20a27cca1e7f9

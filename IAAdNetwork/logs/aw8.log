@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 07/12 23:55:13 INFO agentware.SimClient|next simulation 46 has already started
 07/12 23:55:18 SEVERE agentware.ServerConnection|(1) could not read
 java.io.EOFException
@@ -8,3 +9,69 @@ java.io.EOFException
 07/12 23:55:18 SEVERE agentware.SimClient|* Connection Lost
 07/12 23:55:18 SEVERE agentware.SimClient|* Lost connection to localhost (will reconnect in 30 seconds)
 07/12 23:55:18 SEVERE agentware.SimClient|************************************************************
+=======
+08/12 14:54:46 SEVERE agentware.ServerConnection|(1) connection to server failed
+java.net.ConnectException: Connection refused: connect
+	at java.net.DualStackPlainSocketImpl.connect0(Native Method)
+	at java.net.DualStackPlainSocketImpl.socketConnect(Unknown Source)
+	at java.net.AbstractPlainSocketImpl.doConnect(Unknown Source)
+	at java.net.AbstractPlainSocketImpl.connectToAddress(Unknown Source)
+	at java.net.AbstractPlainSocketImpl.connect(Unknown Source)
+	at java.net.PlainSocketImpl.connect(Unknown Source)
+	at java.net.SocksSocketImpl.connect(Unknown Source)
+	at java.net.Socket.connect(Unknown Source)
+	at java.net.Socket.connect(Unknown Source)
+	at java.net.Socket.<init>(Unknown Source)
+	at java.net.Socket.<init>(Unknown Source)
+	at tau.tac.adx.agentware.ServerConnection.connect(ServerConnection.java:136)
+	at tau.tac.adx.agentware.ServerConnection.run(ServerConnection.java:199)
+	at java.lang.Thread.run(Unknown Source)
+08/12 14:54:46 SEVERE agentware.SimClient|************************************************************
+08/12 14:54:46 SEVERE agentware.SimClient|* Connection Failed
+08/12 14:54:46 SEVERE agentware.SimClient|* Could not connect to localhost (will retry in 30 seconds)
+08/12 14:54:46 SEVERE agentware.SimClient|************************************************************
+08/12 14:55:17 SEVERE agentware.ServerConnection|(1) connection to server failed
+java.net.ConnectException: Connection refused: connect
+	at java.net.DualStackPlainSocketImpl.connect0(Native Method)
+	at java.net.DualStackPlainSocketImpl.socketConnect(Unknown Source)
+	at java.net.AbstractPlainSocketImpl.doConnect(Unknown Source)
+	at java.net.AbstractPlainSocketImpl.connectToAddress(Unknown Source)
+	at java.net.AbstractPlainSocketImpl.connect(Unknown Source)
+	at java.net.PlainSocketImpl.connect(Unknown Source)
+	at java.net.SocksSocketImpl.connect(Unknown Source)
+	at java.net.Socket.connect(Unknown Source)
+	at java.net.Socket.connect(Unknown Source)
+	at java.net.Socket.<init>(Unknown Source)
+	at java.net.Socket.<init>(Unknown Source)
+	at tau.tac.adx.agentware.ServerConnection.connect(ServerConnection.java:136)
+	at tau.tac.adx.agentware.ServerConnection.run(ServerConnection.java:199)
+	at java.lang.Thread.run(Unknown Source)
+08/12 14:55:17 SEVERE agentware.SimClient|************************************************************
+08/12 14:55:17 SEVERE agentware.SimClient|* Connection Failed
+08/12 14:55:17 SEVERE agentware.SimClient|* Could not connect to localhost (will retry in 30 seconds)
+08/12 14:55:17 SEVERE agentware.SimClient|************************************************************
+08/12 14:55:48 SEVERE agentware.ServerConnection|(1) connection to server failed
+java.net.ConnectException: Connection refused: connect
+	at java.net.DualStackPlainSocketImpl.connect0(Native Method)
+	at java.net.DualStackPlainSocketImpl.socketConnect(Unknown Source)
+	at java.net.AbstractPlainSocketImpl.doConnect(Unknown Source)
+	at java.net.AbstractPlainSocketImpl.connectToAddress(Unknown Source)
+	at java.net.AbstractPlainSocketImpl.connect(Unknown Source)
+	at java.net.PlainSocketImpl.connect(Unknown Source)
+	at java.net.SocksSocketImpl.connect(Unknown Source)
+	at java.net.Socket.connect(Unknown Source)
+	at java.net.Socket.connect(Unknown Source)
+	at java.net.Socket.<init>(Unknown Source)
+	at java.net.Socket.<init>(Unknown Source)
+	at tau.tac.adx.agentware.ServerConnection.connect(ServerConnection.java:136)
+	at tau.tac.adx.agentware.ServerConnection.run(ServerConnection.java:199)
+	at java.lang.Thread.run(Unknown Source)
+08/12 14:55:48 SEVERE agentware.SimClient|************************************************************
+08/12 14:55:48 SEVERE agentware.SimClient|* Connection Failed
+08/12 14:55:48 SEVERE agentware.SimClient|* Could not connect to localhost (will retry in 30 seconds)
+08/12 14:55:48 SEVERE agentware.SimClient|************************************************************
+08/12 14:56:18 SEVERE agentware.SimClient|************************************************************
+08/12 14:56:18 SEVERE agentware.SimClient|* Authentication Failed
+08/12 14:56:18 SEVERE agentware.SimClient|* could not login as jack: No user with name 'jack' found
+08/12 14:56:18 SEVERE agentware.SimClient|************************************************************
+>>>>>>> 83f247053c5dd9fba65c9a8b90c20a27cca1e7f9

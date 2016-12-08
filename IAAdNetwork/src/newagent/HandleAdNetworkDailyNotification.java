@@ -90,13 +90,13 @@ public class HandleAdNetworkDailyNotification {
 		}
 		
 		System.out.println(" Stop recording classifier data");
-        
+        /*
         System.out.println(" Start recording classifier data");
 		
 		classify.addUcsInstance(notificationMessage.getServiceLevel(), notificationMessage.getPrice(), adNetwork.getDay() + 1);
 		
 		 System.out.println(" Stop recording classifier data");
-        
+        */
         
         /*
          * Record Log
