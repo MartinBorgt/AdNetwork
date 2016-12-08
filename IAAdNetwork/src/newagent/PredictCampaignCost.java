@@ -72,14 +72,14 @@ public class PredictCampaignCost {
 		//System.out.println("popularity bid: " + popularity);
 		//System.out.println("popularity bid divided by campaign length: " + (storeValue / ((double)(campPeriod * usr.getProbability(segment)))));
 		//popularity = ((double) storeValue) / ((double)(campPeriod * usr.getProbability(segment)));
-		popularity = adNetwork.ICvalue * (10000/(usr.getProbability(segment)*Math.pow(2,segment.size())));
+		popularity = adNetwork.ICvalue * (20/(usr.getProbability(segment)*Math.pow(2,segment.size())));
 		if(popularity > 0.001) {
 			popularity = 0.001;
 			adNetwork.ICvalue *=0.9; 
 		}
 		if(popularity < 0.0001){
 			popularity = 0.001;
-			adNetwork.ICvalue *=1.2; 
+			adNetwork.ICvalue *=2; 
 		}
 		System.out.println("ICvalue = " + adNetwork.ICvalue);
 		//Since bids are capped to reach we normalize it before sending it out
@@ -87,7 +87,7 @@ public class PredictCampaignCost {
 		
 		//We simply bid our ICvalue multiplied by the bidding value
 		popularity = (double)(pendCamp.reachImps)* popularity;
-		System.out.println("popularity bid: " + popularity + " " + adNetwork.ICvalue);
+		System.out.println("popularity bid: " + popularity);
 		return popularity;
 	}
 }
