@@ -154,7 +154,7 @@ public class HandleCampaignOpportunityMessage {
         long cmpBidMillis = random.nextInt((int) cmpimps);
         //cmpBidMillis = (long) (new PredictCampaignCost(adNetwork).predictMultidayPriceIndex(adNetwork) * 1000)*multiplier;
         cmpBidMillis = (long) (new PredictCampaignCost(adNetwork).predictMultidayPriceIndex(adNetwork) * 1000)*multiplier;
-      
+       
         System.out.println("Day " + adNetwork.getDay() + ": Campaign total budget bid (millis): " + cmpBidMillis);
 
         /*

@@ -44,7 +44,7 @@ public class HandleAdNetworkDailyNotification {
             /*
              * Update ICvalue 
              */
-            adNetwork.ICvalue *= 4;
+            adNetwork.ICvalue = 2.5;
         }
         else{
             /*
