@@ -14,105 +14,104 @@ import tau.tac.adx.report.demand.AdNetworkDailyNotification;
  */
 public class HandleAdNetworkDailyNotification {
 
-    public HandleAdNetworkDailyNotification() {
-    }
+	public HandleAdNetworkDailyNotification() {
+	}
 
-    public void run(SampleAdNetworkModified adNetwork, AdNetworkDailyNotification notificationMessage, Classifier classify) {
+	public void run(SampleAdNetworkModified adNetwork, AdNetworkDailyNotification notificationMessage,
+			Classifier classify) {
 
-        adNetwork.setAdNetworkDailyNotification(notificationMessage);
+		adNetwork.setAdNetworkDailyNotification(notificationMessage);
 
-        System.out.println("Day " + adNetwork.getDay() + ": Daily notification for campaign "
-                + adNetwork.getAdNetworkDailyNotification().getCampaignId());
+		System.out.println("Day " + adNetwork.getDay() + ": Daily notification for campaign "
+				+ adNetwork.getAdNetworkDailyNotification().getCampaignId());
 
-        String campaignAllocatedTo = " allocated to "
-                + notificationMessage.getWinner();
+		String campaignAllocatedTo = " allocated to " + notificationMessage.getWinner();
 
-        if ((adNetwork.getPendingCampaign().id == adNetwork.getAdNetworkDailyNotification().getCampaignId())
-                && (notificationMessage.getCostMillis() != 0)) {
+		if ((adNetwork.getPendingCampaign().id == adNetwork.getAdNetworkDailyNotification().getCampaignId())
+				&& (notificationMessage.getCostMillis() != 0)) {
 
-            /*
-             * add campaign to list of won campaigns
-             */
-            adNetwork.getPendingCampaign().setBudget(notificationMessage.getCostMillis() / 1000.0);
-            adNetwork.setCurrCampaign(adNetwork.getPendingCampaign());
-            adNetwork.genCampaignQueries(adNetwork.getCurrCampaign());
-            adNetwork.getMyCampaigns().put(adNetwork.getPendingCampaign().id, adNetwork.getPendingCampaign());
-            
-            campaignAllocatedTo = " WON at cost (Millis)"
-                    + notificationMessage.getCostMillis();
-            
-            /*
-             * Update ICvalue 
-             */
-            adNetwork.ICvalue = 2.5;
-        }
-        else{
-            /*
-             * Update ICvalue 
-             */
-            adNetwork.ICvalue *= 0.9;
-        }
-        System.out.println("Day " + adNetwork.getDay() + ": " + campaignAllocatedTo
-                + ". UCS Level set to " + notificationMessage.getServiceLevel()
-                + " at price " + notificationMessage.getPrice()
-                + " Quality Score is: " + notificationMessage.getQualityScore());
-        
-        System.out.println(" Start recording classifier data");
-		
+			/*
+			 * add campaign to list of won campaigns
+			 */
+			adNetwork.getPendingCampaign().setBudget(notificationMessage.getCostMillis() / 1000.0);
+			adNetwork.setCurrCampaign(adNetwork.getPendingCampaign());
+			adNetwork.genCampaignQueries(adNetwork.getCurrCampaign());
+			adNetwork.getMyCampaigns().put(adNetwork.getPendingCampaign().id, adNetwork.getPendingCampaign());
+
+			campaignAllocatedTo = " WON at cost (Millis)" + notificationMessage.getCostMillis();
+
+			/*
+			 * Update ICvalue
+			 */
+			adNetwork.ICvalue = 2.5;
+		} else {
+			/*
+			 * Update ICvalue
+			 */
+			adNetwork.ICvalue *= 0.9;
+		}
+		System.out.println("Day " + adNetwork.getDay() + ": " + campaignAllocatedTo + ". UCS Level set to "
+				+ notificationMessage.getServiceLevel() + " at price " + notificationMessage.getPrice()
+				+ " Quality Score is: " + notificationMessage.getQualityScore());
+		/*
 		for (Iterator<CampaignLogReport> it = adNetwork.getWinCampaigns().iterator(); it.hasNext();) {
 			CampaignLogReport winningCampaign = it.next();
 			double currDay = adNetwork.getDay();
-			
-			if(winningCampaign.getDayEnd() == currDay){
+
+			if (winningCampaign.getDayEnd() == currDay) {
+				System.out.println(" Start recording classifier data");
 				double reachedImp = winningCampaign.getTargetedImps();
-				
+
 				double startBankStatus = 0.00;
 				double endDayBankStatus = 0.00;
-				
+
 				for (Iterator<CampaignLogReport> it2 = adNetwork.getLogReports().iterator(); it2.hasNext();) {
 					CampaignLogReport logCampaign = it2.next();
-					if(winningCampaign.getDayStart() == logCampaign.getDay()){
-						startBankStatus = logCampaign.getBankStatus();
+					if (winningCampaign.getDayStart() == logCampaign.getDay()) {
+						startBankStatus = logCampaign.getBankStatus();						
 					}
-					
-					if(winningCampaign.getDayEnd() == logCampaign.getDayEnd()){
+					if (winningCampaign.getDayEnd() == logCampaign.getDay()) {
 						endDayBankStatus = logCampaign.getBankStatus();
 					}
 				}
-				
+
 				double totalPayment = endDayBankStatus - startBankStatus;
-				
-				System.out.println("rached imp " + reachedImp );
-				System.out.println("total Payment "  + totalPayment);
-				
+				System.out.println(
+						"endBank " + endDayBankStatus + " startBank " + startBankStatus + " totalPay " + totalPayment);
+				System.out.println("rached imp " + reachedImp);
+				System.out.println("total Payment " + totalPayment);
+
 				classify.addImpInstance(totalPayment, reachedImp);
 			}
+			System.out.println(" Stop recording classifier data");
 		}
-		
-		System.out.println(" Stop recording classifier data");
-        /*
-        System.out.println(" Start recording classifier data");
-		
-		classify.addUcsInstance(notificationMessage.getServiceLevel(), notificationMessage.getPrice(), adNetwork.getDay() + 1);
-		
-		 System.out.println(" Stop recording classifier data");
-        */
-        
-        /*
-         * Record Log
-         */
-        for (int i = 0; i < adNetwork.getLogReports().size(); i++) {
-            if (adNetwork.getLogReports().get(i).getCampaignId() == adNetwork.getAdNetworkDailyNotification().getCampaignId()) {
-                adNetwork.getLogReports().get(i).setWinner(campaignAllocatedTo);
-                if(campaignAllocatedTo.contains(" WON at cost (Millis)")){
-                    StringTokenizer st = new StringTokenizer(campaignAllocatedTo, ")");
-                    st.nextToken();
-                    adNetwork.getLogReports().get(i).setSecondPrice(Long.parseLong(st.nextToken()));
-                }
-                adNetwork.getLogReports().get(i).setServiceLevel(notificationMessage.getServiceLevel());
-                adNetwork.getLogReports().get(i).setQualityScore(notificationMessage.getQualityScore());
-                adNetwork.getLogReports().get(i).setPrice(notificationMessage.getPrice());
-            }
-        }
-    }
+
+		/*
+		 * System.out.println(" Start recording classifier data");
+		 * 
+		 * classify.addUcsInstance(notificationMessage.getServiceLevel(),
+		 * notificationMessage.getPrice(), adNetwork.getDay() + 1);
+		 * 
+		 * System.out.println(" Stop recording classifier data");
+		 */
+
+		/*
+		 * Record Log
+		 */
+		for (int i = 0; i < adNetwork.getLogReports().size(); i++) {
+			if (adNetwork.getLogReports().get(i).getCampaignId() == adNetwork.getAdNetworkDailyNotification()
+					.getCampaignId()) {
+				adNetwork.getLogReports().get(i).setWinner(campaignAllocatedTo);
+				if (campaignAllocatedTo.contains(" WON at cost (Millis)")) {
+					StringTokenizer st = new StringTokenizer(campaignAllocatedTo, ")");
+					st.nextToken();
+					adNetwork.getLogReports().get(i).setSecondPrice(Long.parseLong(st.nextToken()));
+				}
+				adNetwork.getLogReports().get(i).setCampaignQueries(adNetwork.getCurrCampaign().campaignQueries);
+				adNetwork.getLogReports().get(i).setServiceLevel(notificationMessage.getServiceLevel());
+				adNetwork.getLogReports().get(i).setQualityScore(notificationMessage.getQualityScore());
+				adNetwork.getLogReports().get(i).setPrice(notificationMessage.getPrice());
+			}
+		}
+	}
 }

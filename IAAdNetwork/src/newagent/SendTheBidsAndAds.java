@@ -177,15 +177,25 @@ public class SendTheBidsAndAds {
 					MarketSegment marketSegment = it.next();
 					popSt += predictImpressionCost.predictOneDayPriceIndex(marketSegment, dayBiddingFor);
 				}
+				System.out.println("popularity before: " + popSt);
 
 				// Hari: check the lines below against eachother
 				// budgetAvailable = popSt * 0.9;
-				if (budgetAvailable < popSt * 0.9)
-					budgetAvailable = popSt * 0.9;
+				if (budgetAvailable < popSt * 0.75)
+					budgetAvailable = popSt * 0.75;
 
 				popSt = popSt / UserPopulationProbabilities.getProbability(currentCampaign.getTargetSegment());
+				System.out.println("popularity after: " + popSt + " divided by: "
+						+ UserPopulationProbabilities.getProbability(currentCampaign.getTargetSegment()));
 
 				double valueOfBid = popSt;
+				
+//				if(adNetwork.getDay() > 40){
+//					// use this bidvalue later when u have collected enough data
+//					double bidval = classify.getImpClass();
+//					System.out.println("Classifier bids: "+bidval);
+//				}
+				
 				boolean reachSmall = false;
 				if (UserPopulationProbabilities.getProbability(currentCampaign.getTargetSegment()) > impressionLimit) {
 					reachSmall = true;
@@ -302,29 +312,31 @@ public class SendTheBidsAndAds {
 						 * using pop(s, t) by iterating all winning campaign
 						 */
 						double popSt = 0;
-						PredictImpressionCost predictImpressionCost = new PredictImpressionCost(adNetwork);
-						
+						PredictImpressionCost predictImpressionCost = new PredictImpressionCost(adNetwork);						
 						for (Iterator<MarketSegment> it2 = currentCampaign.getTargetSegment().iterator(); it2
 								.hasNext();) {
 							MarketSegment marketSegment = it2.next();
 							popSt += predictImpressionCost.predictOneDayPriceIndex(marketSegment, dayBiddingFor);
 						}
-						
-						// use this bidvalue later when u have collected enough data
-						//double bidval = classify.getImpClass();
-						
 						System.out.println("popularity before: " + popSt);
 
 						// Hari: check the lines below against eachother
 						// budgetAvailable = popSt * 0.9;
-						if (budgetAvailable < popSt * 0.9)
-							budgetAvailable = popSt * 0.9;
+						if (budgetAvailable < popSt * 0.75)
+							budgetAvailable = popSt * 0.75;
 
 						popSt = popSt / UserPopulationProbabilities.getProbability(currentCampaign.getTargetSegment());
 						System.out.println("popularity after: " + popSt + " divided by: "
 								+ UserPopulationProbabilities.getProbability(currentCampaign.getTargetSegment()));
 
 						double valueOfBid = popSt;
+						
+//						if(adNetwork.getDay() > 40){
+//							// use this bidvalue later when u have collected enough data
+//							double bidval = classify.getImpClass();
+//							System.out.println("Classifier bids: "+bidval);
+//						}
+						
 						boolean reachSmall = false;
 						if (UserPopulationProbabilities
 								.getProbability(currentCampaign.getTargetSegment()) > impressionLimit) {

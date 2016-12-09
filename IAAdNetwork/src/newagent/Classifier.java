@@ -13,12 +13,16 @@ import weka.core.DenseInstance;
 import weka.core.Instance;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URI;
 import java.util.Iterator;
 import java.util.Random;
 
+import resource.Res;
 import tau.tac.adx.report.adn.MarketSegment;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileWriter;
 
 public class Classifier {
@@ -35,10 +39,8 @@ public class Classifier {
 	SampleAdNetworkModified adNetwork;
 	Instances impTrainingDataset;
 	Instances ucsTrainingDataset;
-	
-	String impFilename = "/Users/Premlimbu/Desktop/git/AdNetwork/IAAdNetwork/data/impdataset.arff";
-	String ucsFilename = "/Users/Premlimbu/Desktop/git/AdNetwork/IAAdNetwork/data/ucsdataset.arff";
-	
+	String impFilename = null;
+	String ucsFilename = null;
 	FileWriter writer;
 	
 	// creating classifier object for imp
@@ -48,12 +50,16 @@ public class Classifier {
 	IBk ucsIbk = new IBk();
 	
 	public Classifier(SampleAdNetworkModified adNetwork){
-		this.adNetwork = adNetwork;
+		this.adNetwork = adNetwork;		
 		
 		 // load data
 		try {
-			DataSource impDataSource = new DataSource(impFilename);
-			DataSource ucsDataSource = new DataSource(ucsFilename);
+//			impFilename = Res.class.getResource("impdataset.arff").toURI();
+//			ucsFilename = Res.class.getResource("ucsdataset.arff").toURI();
+			impFilename = "/home/hsn/git/AdNetwork/IAAdNetwork/data/impdataset.arff";
+			ucsFilename = "/home/hsn/git/AdNetwork/IAAdNetwork/data/ucsdataset.arff";
+			DataSource impDataSource = new DataSource(new FileInputStream(new File(impFilename)));
+			DataSource ucsDataSource = new DataSource(new FileInputStream(new File(ucsFilename)));
 			
 			// training dataset
 			impTrainingDataset = impDataSource.getDataSet();
@@ -99,7 +105,7 @@ public class Classifier {
 	public void addImpInstance(double totalPay, double reachedImpression){	
 		// creating empty instance with three attribute
 		// Adv. price-index (segment popularity), segment, at day t
-		Instance data = new DenseInstance(3);
+		
 		
 		double totalPayment = totalPay; // total payment for campaign
 		double reachedImp = reachedImpression; // total reach for campaign on final day
@@ -109,15 +115,23 @@ public class Classifier {
 		PredictImpressionCost predCost = new PredictImpressionCost(adNetwork);
 		CampaignData currCampaign = adNetwork.getCurrCampaign();
 		
+		System.out.println("total payment "+totalPayment+" reach "+reachedImp+" pi "+pi);
+		
 		int dayBiddingFor = adNetwork.getDay() + 1;
 		
 		for (Iterator<MarketSegment> it = currCampaign.targetSegment.iterator(); it.hasNext();) {
 			MarketSegment marketSegment = it.next();
 			double popSt = predCost.predictAdvancePriceIndex(marketSegment, dayBiddingFor);
 			
+			Instance data = new DenseInstance(3);
 			data.setValue(impTrainingDataset.attribute(0), popSt); // segment
 			data.setValue(impTrainingDataset.attribute(1), dayBiddingFor); // campaign final day
 			data.setValue(impTrainingDataset.attribute(2), pi); // pi
+			
+			data.setDataset(impTrainingDataset);
+			
+			// adding instance to list
+			impTrainingDataset.add(data);
 		}
 		
 		/*
@@ -131,11 +145,6 @@ public class Classifier {
 		*/
 		
 		// Set instance's dataset to be the dataset "race" 
-		data.setDataset(impTrainingDataset);; //
-		
-		
-		// adding instance to list
-		impTrainingDataset.add(data);
 		
 		// saving to arff file
 		ArffSaver saver = new ArffSaver();

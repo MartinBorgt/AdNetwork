@@ -165,9 +165,10 @@ public class HandleCampaignOpportunityMessage {
         Random  rand = new Random();
         
         double ucsBid = 0.1 + random.nextDouble()/10.0;
+        double ucsLevel = 0;
         
         if (adNetwork.getAdNetworkDailyNotification() != null) {
-            double ucsLevel = adNetwork.getAdNetworkDailyNotification().getServiceLevel();
+            ucsLevel = adNetwork.getAdNetworkDailyNotification().getServiceLevel();
             double ucsTargetBid = adNetwork.getAdNetworkDailyNotification().getPrice();
             
             ucsBid = ucs.predictUCSCost(ucsLevel, ucsTargetBid);
@@ -197,7 +198,7 @@ public class HandleCampaignOpportunityMessage {
         logReport.setCampaignQueries(adNetwork.getPendingCampaign().campaignQueries);
         logReport.setStats(adNetwork.getPendingCampaign().stats);
         logReport.setBudget(adNetwork.getPendingCampaign().budget);
-        logReport.setUcsLevel(adNetwork.getUcsBid());
+        logReport.setUcsLevel(ucsLevel);
         logReport.setBudgetMilis(cmpBidMillis);
         adNetwork.getLogReports().add(logReport);
         /*
