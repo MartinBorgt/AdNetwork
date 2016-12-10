@@ -75,11 +75,11 @@ public class PredictCampaignCost {
 		popularity = adNetwork.ICvalue * (20/(usr.getProbability(segment)*Math.pow(2,segment.size())));
 		if(popularity > 0.001) {
 			popularity = 0.001;
-			adNetwork.ICvalue *=0.9; 
+			adNetwork.ICvalue *=0.6; 
 		}
 		if(popularity < 0.0001){
 			popularity = 0.001;
-			adNetwork.ICvalue *=2; 
+			adNetwork.ICvalue *=1.5; 
 		}
 		System.out.println("ICvalue = " + adNetwork.ICvalue);
 		//Since bids are capped to reach we normalize it before sending it out

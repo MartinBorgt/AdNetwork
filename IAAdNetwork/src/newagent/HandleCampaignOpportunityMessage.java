@@ -132,7 +132,7 @@ public class HandleCampaignOpportunityMessage {
             System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
             System.out.println("@ WARNING duration days conflict with our winning campaign!@");
             System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-            multiplier *= 1.5;
+            multiplier *= 1;
         }
         if(isDaysConflictWithOtherCampaign){
             System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
@@ -141,7 +141,7 @@ public class HandleCampaignOpportunityMessage {
             multiplier *= 1;
         }
         if(adNetwork.getDay() <= 5){
-        	multiplier *= 2;
+        	multiplier *= 1;
         }
         
         Random random = new Random();

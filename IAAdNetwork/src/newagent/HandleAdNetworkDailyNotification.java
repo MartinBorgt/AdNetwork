@@ -43,12 +43,12 @@ public class HandleAdNetworkDailyNotification {
 			/*
 			 * Update ICvalue
 			 */
-			adNetwork.ICvalue = 2.5;
+			adNetwork.ICvalue = 1;
 		} else {
 			/*
 			 * Update ICvalue
 			 */
-			adNetwork.ICvalue *= 0.9;
+			adNetwork.ICvalue *= 0.6;
 		}
 		System.out.println("Day " + adNetwork.getDay() + ": " + campaignAllocatedTo + ". UCS Level set to "
 				+ notificationMessage.getServiceLevel() + " at price " + notificationMessage.getPrice()
