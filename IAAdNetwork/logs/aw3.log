@@ -1,1 +1,17 @@
-09/12 16:45:00 INFO agentware.SimClient|next simulation starts in 59 seconds
+11/12 17:10:12 SEVERE agentware.SimClient|could not create an agent instance of newagent.SampleAdNetworkModified
+java.lang.NullPointerException
+	at newagent.Classifier.run(Classifier.java:74)
+	at newagent.Classifier.<init>(Classifier.java:52)
+	at newagent.SampleAdNetworkModified.<init>(SampleAdNetworkModified.java:120)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:57)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:526)
+	at java.lang.Class.newInstance(Class.java:383)
+	at tau.tac.adx.agentware.SimClient.createAgentInstance(SimClient.java:229)
+	at tau.tac.adx.agentware.SimClient.<init>(SimClient.java:137)
+	at tau.tac.adx.agentware.Main.main(Main.java:117)
+11/12 17:10:12 SEVERE agentware.SimClient|************************************************************
+11/12 17:10:12 SEVERE agentware.SimClient|* Agent Setup Failed
+11/12 17:10:12 SEVERE agentware.SimClient|* could not setup the agent
+11/12 17:10:12 SEVERE agentware.SimClient|************************************************************
