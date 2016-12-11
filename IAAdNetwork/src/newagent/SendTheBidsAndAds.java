@@ -23,7 +23,7 @@ public class SendTheBidsAndAds {
 	public SendTheBidsAndAds() {
 	}
 
-	public void Run(SampleAdNetworkModified adNetwork, Classifier classify ) {
+	public void Run(SampleAdNetworkModified adNetwork, Classifier classify) {
 		adNetwork.setBidBundle(null);
 
 		try {
@@ -189,13 +189,13 @@ public class SendTheBidsAndAds {
 						+ UserPopulationProbabilities.getProbability(currentCampaign.getTargetSegment()));
 
 				double valueOfBid = popSt;
-				
-//				if(adNetwork.getDay() > 40){
-//					// use this bidvalue later when u have collected enough data
-//					double bidval = classify.getImpClass();
-//					System.out.println("Classifier bids: "+bidval);
-//				}
-				
+
+				// if(adNetwork.getDay() > 40){
+				// // use this bidvalue later when u have collected enough data
+				// double bidval = classify.getImpClass();
+				// System.out.println("Classifier bids: "+bidval);
+				// }
+
 				boolean reachSmall = false;
 				if (UserPopulationProbabilities.getProbability(currentCampaign.getTargetSegment()) > impressionLimit) {
 					reachSmall = true;
@@ -214,6 +214,20 @@ public class SendTheBidsAndAds {
 					System.out.println("last day and a lot to go so double bids");
 				}
 
+				double budgetAvailablenew = adNetwork.ICvaluesaved
+						* (20 / (UserPopulationProbabilities.getProbability(currentCampaign.getTargetSegment())
+								* Math.pow(2, currentCampaign.getTargetSegment().size())));
+				double impressionLimitnew = budgetAvailablenew * adNetwork.getCurrCampaign().impsTogo();
+				budgetAvailable = budgetAvailablenew * 1000 * 1.2;
+				impressionLimit = impressionLimitnew * 1000 * 1.2;
+				if (dayBiddingFor <= 5) {
+					budgetAvailable = budgetAvailable * 2;
+					impressionLimit = impressionLimit * 2;
+				} else if (dayBiddingFor == currentCampaign.getDayEnd() && n < ni) {
+					budgetAvailable = 2 * budgetAvailable;
+					impressionLimit = impressionLimit * 2;
+					System.out.println("last day and a lot to go so double bids");
+				}
 				for (AdxQuery query : adNetwork.getCurrCampaign().campaignQueries) {
 					if (adNetwork.getCurrCampaign().impsTogo() - entCount > 0) {
 						/*
@@ -239,8 +253,8 @@ public class SendTheBidsAndAds {
 							}
 
 						}
-						adNetwork.getBidBundle().addQuery(query, (budgetAvailable / impressionLimit) * 10000000,
-								new Ad(null), adNetwork.getCurrCampaign().id, 1);
+						adNetwork.getBidBundle().addQuery(query, budgetAvailable, new Ad(null),
+								adNetwork.getCurrCampaign().id, 1);
 					}
 				}
 
@@ -249,8 +263,12 @@ public class SendTheBidsAndAds {
 				// adNetwork.getBidBundle().setCampaignDailyLimit(adNetwork.getCurrCampaign().id,
 				// (int) impressionLimit, budgetLimit);
 
+				// System.out.println("impression limit: " + impressionLimit + "
+				// budget available: " + budgetAvailable
+				// + " impression bid: " + ((budgetAvailable / impressionLimit)
+				// * 10000000));
 				System.out.println("impression limit: " + impressionLimit + " budget available: " + budgetAvailable
-						+ " impression bid: " + ((budgetAvailable / impressionLimit) * 10000000));
+						+ " impression bid: " + budgetAvailable);
 
 				System.out.println("Day " + adNetwork.getDay() + ": Updated " + entCount
 						+ " Bid Bundle entries for Campaign id " + adNetwork.getCurrCampaign().id);
@@ -279,7 +297,7 @@ public class SendTheBidsAndAds {
 						System.out.println("Impressions for : " + winningCampaign);
 
 						adNetwork.setBidBundle(new AdxBidBundle());
-						
+
 						int entCount = 0;
 
 						/*
@@ -312,7 +330,7 @@ public class SendTheBidsAndAds {
 						 * using pop(s, t) by iterating all winning campaign
 						 */
 						double popSt = 0;
-						PredictImpressionCost predictImpressionCost = new PredictImpressionCost(adNetwork);						
+						PredictImpressionCost predictImpressionCost = new PredictImpressionCost(adNetwork);
 						for (Iterator<MarketSegment> it2 = currentCampaign.getTargetSegment().iterator(); it2
 								.hasNext();) {
 							MarketSegment marketSegment = it2.next();
@@ -330,13 +348,14 @@ public class SendTheBidsAndAds {
 								+ UserPopulationProbabilities.getProbability(currentCampaign.getTargetSegment()));
 
 						double valueOfBid = popSt;
-						
-//						if(adNetwork.getDay() > 40){
-//							// use this bidvalue later when u have collected enough data
-//							double bidval = classify.getImpClass();
-//							System.out.println("Classifier bids: "+bidval);
-//						}
-						
+
+						// if(adNetwork.getDay() > 40){
+						// // use this bidvalue later when u have collected
+						// enough data
+						// double bidval = classify.getImpClass();
+						// System.out.println("Classifier bids: "+bidval);
+						// }
+
 						boolean reachSmall = false;
 						if (UserPopulationProbabilities
 								.getProbability(currentCampaign.getTargetSegment()) > impressionLimit) {
@@ -354,6 +373,22 @@ public class SendTheBidsAndAds {
 						if (dayBiddingFor == currentCampaign.getDayEnd() && n < ni) {
 							budgetAvailable = 2 * budgetAvailable;
 							System.out.println("last day and a lot to go so double bids " + budgetAvailable);
+						}
+
+						double budgetAvailablenew = adNetwork.ICvaluesaved
+								* (20 / (UserPopulationProbabilities.getProbability(currentCampaign.getTargetSegment())
+										* Math.pow(2, currentCampaign.getTargetSegment().size())));
+						double impressionLimitnew = budgetAvailablenew * adNetwork.getCurrCampaign().impsTogo();
+						budgetAvailable = budgetAvailablenew * 1000 * 1.2;
+						impressionLimit = impressionLimitnew * 1000 * 1.2;
+
+						if (dayBiddingFor <= 5) {
+							budgetAvailable = budgetAvailable * 2;
+							impressionLimit = impressionLimit * 2;
+						} else if (dayBiddingFor == currentCampaign.getDayEnd() && n < ni) {
+							budgetAvailable = 2 * budgetAvailable;
+							impressionLimit = impressionLimit * 2;
+							System.out.println("last day and a lot to go so double bids");
 						}
 
 						for (AdxQuery query : currentCampaign.getCampaignQueries()) {
@@ -381,17 +416,21 @@ public class SendTheBidsAndAds {
 									}
 
 								}
-								adNetwork.getBidBundle().addQuery(query, (budgetAvailable / impressionLimit) * 10000000,
-										new Ad(null), currentCampaign.getCampaignId(), 1);
+								adNetwork.getBidBundle().addQuery(query, budgetAvailable, new Ad(null),
+										currentCampaign.getCampaignId(), 1);
 							}
 						}
 
 						adNetwork.getBidBundle().setCampaignDailyLimit(currentCampaign.getCampaignId(),
 								(int) impressionLimit, budgetAvailable);
 
-						System.out.println(
-								"impression limit: " + impressionLimit + " budget available: " + budgetAvailable
-										+ " impression bid: " + ((budgetAvailable / impressionLimit) * 10000000));
+						// System.out.println(
+						// "impression limit: " + impressionLimit + " budget
+						// available: " + budgetAvailable
+						// + " impression bid: " + ((budgetAvailable /
+						// impressionLimit) * 10000000));
+						System.out.println("impression limit: " + impressionLimit + " budget available: "
+								+ budgetAvailable + " impression bid: " + budgetAvailable);
 
 						System.out.println("Day " + adNetwork.getDay() + ": Updated " + entCount
 								+ " Bid Bundle entries for Campaign id " + currentCampaign.getCampaignId());

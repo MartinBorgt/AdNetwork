@@ -159,7 +159,7 @@ public class HandleCampaignOpportunityMessage {
 			multiplier *= 1;
 		}
 		if (adNetwork.getDay() <= 5) {
-			multiplier *= 1 + (1 / (adNetwork.getDay()));
+			multiplier *= 1 + (1 / (adNetwork.getDay() + 1));
 		}
 
 		Random random = new Random();

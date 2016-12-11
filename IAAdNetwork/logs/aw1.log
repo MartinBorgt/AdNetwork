@@ -1,10 +1,9 @@
-11/12 17:15:47 WARNING netlib.BLAS|Failed to load implementation from: com.github.fommil.netlib.NativeSystemBLAS
-11/12 17:15:47 WARNING netlib.BLAS|Failed to load implementation from: com.github.fommil.netlib.NativeRefBLAS
-11/12 17:15:47 WARNING netlib.LAPACK|Failed to load implementation from: com.github.fommil.netlib.NativeSystemLAPACK
-11/12 17:15:47 WARNING netlib.LAPACK|Failed to load implementation from: com.github.fommil.netlib.NativeRefLAPACK
-11/12 17:15:47 INFO agentware.SimClient|next simulation starts in 12 seconds
-11/12 17:26:00 INFO agentware.SimClient|next simulation starts in 59 seconds
-11/12 17:36:55 SEVERE agentware.ServerConnection|(2) connection to server failed
+11/12 18:31:16 WARNING netlib.BLAS|Failed to load implementation from: com.github.fommil.netlib.NativeSystemBLAS
+11/12 18:31:16 WARNING netlib.BLAS|Failed to load implementation from: com.github.fommil.netlib.NativeRefBLAS
+11/12 18:31:16 WARNING netlib.LAPACK|Failed to load implementation from: com.github.fommil.netlib.NativeSystemLAPACK
+11/12 18:31:16 WARNING netlib.LAPACK|Failed to load implementation from: com.github.fommil.netlib.NativeRefLAPACK
+11/12 18:31:16 INFO agentware.SimClient|next simulation starts in 43 seconds
+11/12 18:40:19 SEVERE agentware.ServerConnection|(2) connection to server failed
 java.net.ConnectException: Connection refused
 	at java.net.PlainSocketImpl.socketConnect(Native Method)
 	at java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:339)
@@ -18,11 +17,11 @@ java.net.ConnectException: Connection refused
 	at tau.tac.adx.agentware.ServerConnection.connect(ServerConnection.java:136)
 	at tau.tac.adx.agentware.ServerConnection.run(ServerConnection.java:199)
 	at java.lang.Thread.run(Thread.java:745)
-11/12 17:36:55 SEVERE agentware.SimClient|************************************************************
-11/12 17:36:55 SEVERE agentware.SimClient|* Connection Failed
-11/12 17:36:55 SEVERE agentware.SimClient|* Could not connect to localhost (will retry in 30 seconds)
-11/12 17:36:55 SEVERE agentware.SimClient|************************************************************
-11/12 17:37:25 SEVERE agentware.ServerConnection|(2) connection to server failed
+11/12 18:40:19 SEVERE agentware.SimClient|************************************************************
+11/12 18:40:19 SEVERE agentware.SimClient|* Connection Failed
+11/12 18:40:19 SEVERE agentware.SimClient|* Could not connect to localhost (will retry in 30 seconds)
+11/12 18:40:19 SEVERE agentware.SimClient|************************************************************
+11/12 18:40:49 SEVERE agentware.ServerConnection|(2) connection to server failed
 java.net.ConnectException: Connection refused
 	at java.net.PlainSocketImpl.socketConnect(Native Method)
 	at java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:339)
@@ -36,11 +35,11 @@ java.net.ConnectException: Connection refused
 	at tau.tac.adx.agentware.ServerConnection.connect(ServerConnection.java:136)
 	at tau.tac.adx.agentware.ServerConnection.run(ServerConnection.java:199)
 	at java.lang.Thread.run(Thread.java:745)
-11/12 17:37:25 SEVERE agentware.SimClient|************************************************************
-11/12 17:37:25 SEVERE agentware.SimClient|* Connection Failed
-11/12 17:37:25 SEVERE agentware.SimClient|* Could not connect to localhost (will retry in 30 seconds)
-11/12 17:37:25 SEVERE agentware.SimClient|************************************************************
-11/12 17:37:55 SEVERE agentware.ServerConnection|(2) connection to server failed
+11/12 18:40:49 SEVERE agentware.SimClient|************************************************************
+11/12 18:40:49 SEVERE agentware.SimClient|* Connection Failed
+11/12 18:40:49 SEVERE agentware.SimClient|* Could not connect to localhost (will retry in 30 seconds)
+11/12 18:40:49 SEVERE agentware.SimClient|************************************************************
+11/12 18:41:19 SEVERE agentware.ServerConnection|(2) connection to server failed
 java.net.ConnectException: Connection refused
 	at java.net.PlainSocketImpl.socketConnect(Native Method)
 	at java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:339)
@@ -54,7 +53,79 @@ java.net.ConnectException: Connection refused
 	at tau.tac.adx.agentware.ServerConnection.connect(ServerConnection.java:136)
 	at tau.tac.adx.agentware.ServerConnection.run(ServerConnection.java:199)
 	at java.lang.Thread.run(Thread.java:745)
-11/12 17:37:55 SEVERE agentware.SimClient|************************************************************
-11/12 17:37:55 SEVERE agentware.SimClient|* Connection Failed
-11/12 17:37:55 SEVERE agentware.SimClient|* Could not connect to localhost (will retry in 30 seconds)
-11/12 17:37:55 SEVERE agentware.SimClient|************************************************************
+11/12 18:41:19 SEVERE agentware.SimClient|************************************************************
+11/12 18:41:19 SEVERE agentware.SimClient|* Connection Failed
+11/12 18:41:19 SEVERE agentware.SimClient|* Could not connect to localhost (will retry in 30 seconds)
+11/12 18:41:19 SEVERE agentware.SimClient|************************************************************
+11/12 18:41:49 SEVERE agentware.ServerConnection|(2) connection to server failed
+java.net.ConnectException: Connection refused
+	at java.net.PlainSocketImpl.socketConnect(Native Method)
+	at java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:339)
+	at java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:200)
+	at java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:182)
+	at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)
+	at java.net.Socket.connect(Socket.java:579)
+	at java.net.Socket.connect(Socket.java:528)
+	at java.net.Socket.<init>(Socket.java:425)
+	at java.net.Socket.<init>(Socket.java:208)
+	at tau.tac.adx.agentware.ServerConnection.connect(ServerConnection.java:136)
+	at tau.tac.adx.agentware.ServerConnection.run(ServerConnection.java:199)
+	at java.lang.Thread.run(Thread.java:745)
+11/12 18:41:49 SEVERE agentware.SimClient|************************************************************
+11/12 18:41:49 SEVERE agentware.SimClient|* Connection Failed
+11/12 18:41:49 SEVERE agentware.SimClient|* Could not connect to localhost (will retry in 30 seconds)
+11/12 18:41:49 SEVERE agentware.SimClient|************************************************************
+11/12 18:42:19 SEVERE agentware.ServerConnection|(2) connection to server failed
+java.net.ConnectException: Connection refused
+	at java.net.PlainSocketImpl.socketConnect(Native Method)
+	at java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:339)
+	at java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:200)
+	at java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:182)
+	at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)
+	at java.net.Socket.connect(Socket.java:579)
+	at java.net.Socket.connect(Socket.java:528)
+	at java.net.Socket.<init>(Socket.java:425)
+	at java.net.Socket.<init>(Socket.java:208)
+	at tau.tac.adx.agentware.ServerConnection.connect(ServerConnection.java:136)
+	at tau.tac.adx.agentware.ServerConnection.run(ServerConnection.java:199)
+	at java.lang.Thread.run(Thread.java:745)
+11/12 18:42:19 SEVERE agentware.SimClient|************************************************************
+11/12 18:42:19 SEVERE agentware.SimClient|* Connection Failed
+11/12 18:42:19 SEVERE agentware.SimClient|* Could not connect to localhost (will retry in 30 seconds)
+11/12 18:42:19 SEVERE agentware.SimClient|************************************************************
+11/12 18:42:49 SEVERE agentware.ServerConnection|(2) connection to server failed
+java.net.ConnectException: Connection refused
+	at java.net.PlainSocketImpl.socketConnect(Native Method)
+	at java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:339)
+	at java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:200)
+	at java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:182)
+	at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)
+	at java.net.Socket.connect(Socket.java:579)
+	at java.net.Socket.connect(Socket.java:528)
+	at java.net.Socket.<init>(Socket.java:425)
+	at java.net.Socket.<init>(Socket.java:208)
+	at tau.tac.adx.agentware.ServerConnection.connect(ServerConnection.java:136)
+	at tau.tac.adx.agentware.ServerConnection.run(ServerConnection.java:199)
+	at java.lang.Thread.run(Thread.java:745)
+11/12 18:42:49 SEVERE agentware.SimClient|************************************************************
+11/12 18:42:49 SEVERE agentware.SimClient|* Connection Failed
+11/12 18:42:49 SEVERE agentware.SimClient|* Could not connect to localhost (will retry in 30 seconds)
+11/12 18:42:49 SEVERE agentware.SimClient|************************************************************
+11/12 18:43:19 SEVERE agentware.ServerConnection|(2) connection to server failed
+java.net.ConnectException: Connection refused
+	at java.net.PlainSocketImpl.socketConnect(Native Method)
+	at java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:339)
+	at java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:200)
+	at java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:182)
+	at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)
+	at java.net.Socket.connect(Socket.java:579)
+	at java.net.Socket.connect(Socket.java:528)
+	at java.net.Socket.<init>(Socket.java:425)
+	at java.net.Socket.<init>(Socket.java:208)
+	at tau.tac.adx.agentware.ServerConnection.connect(ServerConnection.java:136)
+	at tau.tac.adx.agentware.ServerConnection.run(ServerConnection.java:199)
+	at java.lang.Thread.run(Thread.java:745)
+11/12 18:43:19 SEVERE agentware.SimClient|************************************************************
+11/12 18:43:19 SEVERE agentware.SimClient|* Connection Failed
+11/12 18:43:19 SEVERE agentware.SimClient|* Could not connect to localhost (will retry in 30 seconds)
+11/12 18:43:19 SEVERE agentware.SimClient|************************************************************

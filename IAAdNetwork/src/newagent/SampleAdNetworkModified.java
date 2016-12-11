@@ -118,6 +118,8 @@ public class SampleAdNetworkModified extends Agent {
     // classifier
     
     Classifier classify = new Classifier(this);
+    
+    public double ICvaluesaved = 1;
 
     /*
      * Losing Campaign(s)
